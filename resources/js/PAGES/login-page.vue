@@ -1,23 +1,13 @@
 <template>
 
-    <body class="w-full h-screen">
+    <section class="BACKGROUND grid h-screen w-screen">
 
-        <div class="background-SECTION h-screen">
-            <div class="w-[50%]"></div>
-            <div class="w-[50%]"></div>
+        <div class="login_box-BACKGROUND login_box-GRID">
+            <div class="ITEM_1 login_box-ITEMS"><div class="img-logo"></div></div>
+            <div class="ITEM_2 login_box-ITEMS">2</div>
         </div>
 
-        <div class="loginBox-BACKGROUND loginBox-GRID_LAYOUT">
-            <div class="firsRow"><mmw-logo-wide /></div>
-
-            <div class="secondRow">
-                <input type="text" placeholder="Username">
-                <input type="password" placeholder="Password">
-            </div>
-
-        </div>
-
-    </body>
+    </section>
 
 </template>
 
@@ -49,41 +39,55 @@ import mmwLogoWide from '../COMPONENTS/mmw-logo-wide.vue';
     $MainBackgroundColor: getColor(background, primary)
     $SecondaryBackgroundColor: getColor(background, secondary)
     $MainBackgroundComponentColor: getColor(backgroundComponents, BasicWindow)
+    $LoginBoxSize: 50vh
 
-    body
-        position: relative
+    // Mixin to calculate opposite shadow offset for corners
+    @mixin opposite-corner-shadow-offset($offset)
+        $opposite-offset: -$offset
+        box-shadow: $offset $offset $SecondaryBackgroundColor, $opposite-offset $opposite-offset $MainBackgroundColor
 
-    .background-SECTION
-        background-color: #1a202c
-        z-index: 0
-        div:first-child
-            background-color: $SecondaryBackgroundColor
-            float: right
-        div:nth-child(2)
-            background-color: $MainBackgroundColor
-            float: left
-        div
-            height: 100vmin
+    // Edit the background colour
+    section.BACKGROUND
+        background-color: $SecondaryBackgroundColor
+        background: -moz-linear-gradient(90deg, $SecondaryBackgroundColor 50%, $MainBackgroundColor 50%)
+        background: -webkit-linear-gradient(90deg, $SecondaryBackgroundColor 50%, $MainBackgroundColor 50%)
+        background: linear-gradient(90deg, $SecondaryBackgroundColor 50%, $MainBackgroundColor 50%)
+        @media (max-width: 800px)
+            background: $MainBackgroundColor
 
-    .loginBox-BACKGROUND
+    // Edit first element in <section>
+    section > :first-child
+        width: $LoginBoxSize
+        height: ($LoginBoxSize * 1.05)
+        place-self: center
+
+    // Edit all elements with login_box
+    [class*="login_box"]
+        overflow: hidden
+        color: darken($MainBackgroundComponentColor, 80)
+
+    // Edit BACKGROUND of login_box
+    .login_box-BACKGROUND
         background-color: $MainBackgroundComponentColor
-        position: absolute
-        top: 50%
-        left: 50%
-        transform: translate(-50%, -50%)
-        z-index: 1
+        @include opposite-corner-shadow-offset(30px)
 
-    .loginBox-GRID_LAYOUT
+    .login_box-GRID
         display: grid
-        grid-template-rows: 20% 80%
-        div
-            width: auto
-            height: auto
-            z-index: 2
-        .firsRow
-            grid-area: top
-        .secondRow
-            grid-area: bottom
+        grid-template-rows: 75px 1fr
+        gap: 2.5rem
+        padding: 45px
+
+    .login_box-ITEMS
+        background-color: darken($MainBackgroundComponentColor, 2.5)
+        padding: 5px
+
+    .ITEM_1 > .img-logo
+        background-image: url("../../../public/images/mmw-logo-wide-high.png")
+        background-size: contain
+        background-position: center
+        background-repeat: no-repeat
+        width: 100%
+        height: 100%
 
 </style>
 
