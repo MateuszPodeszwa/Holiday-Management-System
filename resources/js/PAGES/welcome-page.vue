@@ -7,6 +7,8 @@
         </div>
     </div>
 
+    <router-link :to="{ name: 'LoginPage' }">Go to Login</router-link>
+
 </template>
 
 <script>
@@ -17,12 +19,16 @@ export default {
             welcomeMessage: "Welcome to mainline menswear holiday booking system",
             buttonText: "Explore",
             isUppercase: true,
+            isDark: false,
         };
     },
     methods: {
         toggleDarkMode() {
             alert('Dark mode is on');
         }
+    },
+    computed: {
+
     }
 };
 </script>
@@ -34,7 +40,6 @@ $text-color: #fff
 $button-bg-color: #fff
 $button-text-color: #4DA2D4
 $isDark: false
-
 
 // Styles
 .welcome-container
