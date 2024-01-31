@@ -25,6 +25,8 @@
 
 <script>
 import MmwLogoWide from "../COMPONENTS/mmw-logo-wide.vue";
+import { ref, reactive, watch } from 'vue'
+import gsap from 'gsap'
 
 export default {
     name: 'LoginPage',
@@ -46,12 +48,15 @@ import mmwLogoWide from '../COMPONENTS/mmw-logo-wide.vue';
     // Importing local files
     @use '../../sass/abstracts' as *
     @use "../../sass/base" as base
+    @use "../../sass/abstracts/variables" as externall
 
     // Define local variables
     $MainBackgroundColor: getColor(background, primary)
     $SecondaryBackgroundColor: getColor(background, secondary)
     $MainBackgroundComponentColor: getColor(backgroundComponents, BasicWindow)
-    $LoginBoxSize: 50vh
+    $LoginBoxBase: 525px
+    $LoginBoxSize: (min(100vw, max($LoginBoxBase, 20vw)), min($LoginBoxBase, 100vh), 800px) // nth: 1: width, 2: height
+    $BreakingPoint: externall.$MobileBreakingPoint
 
     // Mixin to calculate opposite shadow offset for corners
     @mixin opposite-corner-shadow-offset($offset)
@@ -64,13 +69,13 @@ import mmwLogoWide from '../COMPONENTS/mmw-logo-wide.vue';
         background: -moz-linear-gradient(90deg, $SecondaryBackgroundColor 50%, $MainBackgroundColor 50%)
         background: -webkit-linear-gradient(90deg, $SecondaryBackgroundColor 50%, $MainBackgroundColor 50%)
         background: linear-gradient(90deg, $SecondaryBackgroundColor 50%, $MainBackgroundColor 50%)
-        @media (max-width: 800px)
+        @media (max-width: $BreakingPoint)
             background: $MainBackgroundColor
 
     // Edit first element in <section>
     section > :first-child
-        width: $LoginBoxSize
-        height: ($LoginBoxSize * 1.05)
+        width: nth($LoginBoxSize, 1)
+        height: nth($LoginBoxSize, 2)
         place-self: center
 
     // Edit all elements with login_box
@@ -86,12 +91,12 @@ import mmwLogoWide from '../COMPONENTS/mmw-logo-wide.vue';
     .login_box-GRID
         display: grid
         grid-template-rows: 75px 1fr
-        gap: 2.5rem
-        padding: 40px
+        gap: 2.525rem
+        padding: 45px
 
     .login_box-ITEMS
         // background-color: darken($MainBackgroundComponentColor, 2.5)
-        padding: 5px
+        padding: 2.5px
 
     .ITEM_1 > .img-logo
         background-image: url("../../../public/images/mmw-logo-wide-high.png")
@@ -104,7 +109,7 @@ import mmwLogoWide from '../COMPONENTS/mmw-logo-wide.vue';
     .ITEM_2
         display: flex
         flex-direction: column
-        margin-bottom: 0
+        margin: 0 15px
 
         input
             height: 70px
@@ -114,8 +119,8 @@ import mmwLogoWide from '../COMPONENTS/mmw-logo-wide.vue';
             background-color: #C9E0F2
 
         span
-            flex: 1
-            margin: 0
+            flex: 0
+            margin: 0 0 25px 0
             padding: 0
 
         label, p
