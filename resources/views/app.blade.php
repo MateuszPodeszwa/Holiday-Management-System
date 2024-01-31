@@ -18,7 +18,7 @@
 <body class="antialiased">
 
 <div id="app"></div>
-@vite(['resources/css/style-app.sass','resources/css/app.css', 'resources/js/app.js'])
+@vite(['resources/sass/app.scss','resources/css/app.css', 'resources/js/app.js'])
 </body>
 
 </html>
