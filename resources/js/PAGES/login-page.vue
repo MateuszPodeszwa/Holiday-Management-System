@@ -4,7 +4,19 @@
 
         <div class="login_box-BACKGROUND login_box-GRID">
             <div class="ITEM_1 login_box-ITEMS"><div class="img-logo"></div></div>
-            <div class="ITEM_2 login_box-ITEMS">2</div>
+            <div class="ITEM_2 login_box-ITEMS">
+
+                <span>
+                    <p><label for="username">Username</label></p>
+                    <input type="email" id="username" placeholder="mateuszpodeszwa@mmw.co.uk">
+                </span>
+                <span>
+                    <p><label for="password">Password</label></p>
+                    <input type="password" id="password" placeholder="********">
+                </span>
+
+
+            </div>
         </div>
 
     </section>
@@ -75,10 +87,10 @@ import mmwLogoWide from '../COMPONENTS/mmw-logo-wide.vue';
         display: grid
         grid-template-rows: 75px 1fr
         gap: 2.5rem
-        padding: 45px
+        padding: 40px
 
     .login_box-ITEMS
-        background-color: darken($MainBackgroundComponentColor, 2.5)
+        // background-color: darken($MainBackgroundComponentColor, 2.5)
         padding: 5px
 
     .ITEM_1 > .img-logo
@@ -88,6 +100,30 @@ import mmwLogoWide from '../COMPONENTS/mmw-logo-wide.vue';
         background-repeat: no-repeat
         width: 100%
         height: 100%
+
+    .ITEM_2
+        display: flex
+        flex-direction: column
+        margin-bottom: 0
+
+        input
+            height: 70px
+            padding-left: 20px
+            box-sizing: border-box
+            margin: 0
+            background-color: #C9E0F2
+
+        span
+            flex: 1
+            margin: 0
+            padding: 0
+
+        label, p
+            margin-bottom: 15px
+            line-height: 150% /* 27px */
+            letter-spacing: -0.142px
+            font-family: Arial
+
 
 </style>
 
