@@ -1,0 +1,12 @@
+// functions.sass
+
+// @use colors.scss
+@use "colors" as colors
+
+// Function to get a specific shade from _colors.scss
+@function getColor($category, $shade)
+    @return map-get(map-get(colors.$colors, $category), $shade)
+
+// Example usage
+// $backgroundPrimary: getColor('background', 'primary');
+//      Returns: #ecf0f1

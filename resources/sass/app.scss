@@ -1,0 +1,6 @@
+// Import those files to be able use them in the .blade.php file
+@use "abstracts" as abstracts;
+@use "base" as base;
+
+// Testing if the connection works
+@debug abstracts.getColor(background, primary);
