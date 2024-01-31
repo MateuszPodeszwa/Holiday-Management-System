@@ -37,7 +37,7 @@ export default {
 
 <style scoped>
 .blurred-img {
-    background-image: url("../../../public/images/mmw-logo-wide-low.png");
+    background-image: url("../../../public/images/mmw-logo-wide-high.png");
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
