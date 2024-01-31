@@ -1,15 +1,14 @@
 <template>
-    <div :class="{ 'dark-mode': darkMode }" class="welcome-container">
-        <div class="welcome-content">
-            <div>
-                <h1 :class="{ 'welcome-text': !darkMode, 'welcome-text-dark': darkMode }">
-                    {{ welcomeMessage }}
-                </h1>
-            </div>
-            <button :class="{ 'dark-button': darkMode }" class="welcome-button">{{ buttonText }}</button>
+    <div class="welcome-container">
+        <div class="welcome-content" >
+            <div><h1 :class="{ 'welcome-text-uppercase': isUppercase }" class="welcome-text">{{ welcomeMessage }}</h1></div>
+            <button class="welcome-button">{{ buttonText }}</button><br>
+            <button @click="toggleDarkMode" class="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-10">Click me</button>
         </div>
     </div>
+
 </template>
+
 <script>
 export default {
     name: 'WelcomePage',
@@ -17,59 +16,55 @@ export default {
         return {
             welcomeMessage: "Welcome to mainline menswear holiday booking system",
             buttonText: "Explore",
-            darkMode: false, // Set this variable to true or false as needed
+            isUppercase: true,
         };
     },
+    methods: {
+        toggleDarkMode() {
+            alert('Dark mode is on');
+        }
+    }
 };
 </script>
 
 <style lang="sass" scoped>
 // Variables
-$bg-color-light: #4DA2D4
-$text-color-light: #fff
-$button-bg-color-light: #fff
-$button-text-color-light: #4DA2D4
+$bg-color: #4DA2D4
+$text-color: #fff
+$button-bg-color: #fff
+$button-text-color: #4DA2D4
+$isDark: false
 
-$bg-color-dark: #1f1f1f
-$text-color-dark: #fff
-$button-bg-color-dark: #333
-$button-text-color-dark: #fff
 
 // Styles
 .welcome-container
+    @if $isDark
+        background-color: darken($bg-color, 40%)
+    @else
+        background-color: $bg-color
+
     height: 100vh
     display: flex
     align-items: center
     justify-content: center
 
-.welcome-content
-    text-align: center
+    .welcome-content
+        text-align: center
 
-.welcome-text
-    font-size: 24px
-    font-weight: bold
+    .welcome-text
+        color: $text-color
+        font-size: 24px
+        font-weight: bold
 
-.welcome-text-dark
-    // Dark mode text styles
-    font-size: 26px
-    color: $text-color-dark
 
-.welcome-button
-    padding: 10px 20px
-    border: none
-    border-radius: 15px
-    margin-top: 20px
+    .welcome-button
+        background-color: $button-bg-color
+        color: $button-text-color
+        padding: 10px 20px
+        border: none
+        border-radius: 15px
+        margin-top: 20px
 
-// Light mode styles
-.welcome-container.dark-mode
-    background-color: $bg-color-dark
-
-.welcome-text-dark-mode
-    // Dark mode text styles
-    font-size: 26px
-    color: $text-color-dark
-
-.welcome-button.dark-mode
-    background-color: $button-bg-color-dark
-    color: $button-text-color-dark
+    .welcome-text-uppercase
+        text-transform: uppercase
 </style>
