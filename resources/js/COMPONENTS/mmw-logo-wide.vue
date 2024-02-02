@@ -1,7 +1,7 @@
 <template>
     <!-- Blurred Image Component -->
     <div class="blurred-img">
-        <img src="../../../public/images/highres.jpg" loading="lazy" @load="loaded" />
+        <img src="../../../public/images/highres.jpg" loading="lazy" @load="loaded"  alt=""/>
     </div>
 </template>
 
