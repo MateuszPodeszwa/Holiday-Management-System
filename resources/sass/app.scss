@@ -3,4 +3,6 @@
 @use "base" as base;
 
 // Testing if the connection works
-@debug abstracts.getColor(background, primary);
+// @debug abstracts.getColor(background, primary);
+@debug "app.scss - successfuly imported"
+
