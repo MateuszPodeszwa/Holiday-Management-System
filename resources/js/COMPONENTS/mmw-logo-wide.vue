@@ -1,7 +1,7 @@
 <template>
     <!-- Blurred Image Component -->
-    <div class="blurred-img">
-        <img src="../../../public/images/highres.jpg" loading="lazy" @load="loaded"  alt=""/>
+    <div class="blurred-img blurred-img-blurred" id="assign-blurred">
+        <img src="../../../public/images/mmw-logo-wide-high.png" loading="lazy" @load="loaded" alt=""/>
     </div>
 </template>
 
@@ -16,15 +16,20 @@ export default {
         loaded() {
             const blurredImageDiv = document.querySelector(".blurred-img")
             const img = blurredImageDiv.querySelector("img")
-            function loaded() {
+            const blurredElement = document.getElementById('assign-blurred')
+
+
+            setTimeout(function loaded() {
                 blurredImageDiv.classList.add("loaded")
-            }
+                blurredElement.classList.remove('blurred-img-blurred')
+            }, 5);
 
             if (img.complete) {
-                loaded()
+                this.loaded()
             } else {
-                img.addEventListener("load", loaded)
+                img.addEventListener("load", this.loaded)
             }
+
         },
     },
 };
@@ -32,10 +37,14 @@ export default {
 
 <style scoped>
 .blurred-img {
-    background-image: url("../../../public/images/lowres.jpg");
+    background-image: url("../../../public/images/mmw-logo-wide-low.png");
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
+}
+
+.blurred-img-blurred {
+    filter: blur(3px);
 }
 
 .blurred-img::before {
@@ -54,7 +63,7 @@ export default {
 
 .blurred-img img {
     opacity: 0;
-    transition: opacity 250ms ease-in-out;
+    transition: opacity 550ms ease-in-out;
 }
 
 .blurred-img.loaded img {
