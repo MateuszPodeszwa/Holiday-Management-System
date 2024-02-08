@@ -22,7 +22,7 @@
                 setTimeout(function loaded() {
                     blurredImageDiv.classList.add("loaded")
                     blurredElement.classList.remove('blurred-img-blurred')
-                }, 5);
+                }, 0);
 
                 if (img.complete) {
                     this.loaded()
@@ -38,10 +38,11 @@
 <style scoped>
 
     span, img {
-        margin: 0;
-        padding: 0;
-        width: fit-content;
-        height: fit-content;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
     }
 
     .blurred-img {
@@ -70,8 +71,8 @@
     }
 
     .blurred-img img {
-        opacity: 0;
-        transition: opacity 550ms ease-in-out;
+        opacity: 0.8;
+        transition: opacity 250ms ease-in-out;
     }
 
     .blurred-img.loaded img {

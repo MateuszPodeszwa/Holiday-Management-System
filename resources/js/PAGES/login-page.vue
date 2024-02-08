@@ -1,47 +1,70 @@
 <template>
 
-    <section class="BACKGROUND grid h-screen w-screen">
-
-        <div class="login_box-BACKGROUND login_box-GRID">
-            <div class="ITEM_1 login_box-ITEMS"><div class="img-logo"></div></div>
+    <section class="BACKGROUND grid h-screen w-screen background_slide-ANIMATION">
+        <div class="login_box-BACKGROUND box_login-ANIMATION login_box-GRID">
+            <div class="ITEM_1 login_box-ITEMS"><keep-alive><mmw-logo-wide class="img-logo" /></keep-alive></div>
             <div class="ITEM_2 login_box-ITEMS">
-
                 <span>
-                    <p><label for="username">Username</label></p>
-                    <input type="email" id="username" placeholder="mateuszpodeszwa@mmw.co.uk">
+                    <keep-alive><p><label for="username">{{ usernameLabel }}</label></p></keep-alive>
+                    <input type="email" id="username" :placeholder="usernamePlaceholder">
                 </span>
                 <span>
-                    <p><label for="password">Password</label></p>
-                    <input type="password" id="password" placeholder="********">
+                    <p><label for="password">{{ passwordLabel }}</label></p>
+                    <input type="password" id="password" :placeholder="passwordPlaceholder">
                 </span>
-
-
             </div>
         </div>
-
+        <bottom-nav-bar class="bottom_navbar"/>
     </section>
 
 </template>
 
 <script>
-import MmwLogoWide from "../COMPONENTS/mmw-logo-wide.vue";
-import { ref, reactive, watch } from 'vue'
-import gsap from 'gsap'
+import gsap from "gsap";
+import mmwLogoWide from "../COMPONENTS/mmw-logo-wide.vue";
+import bottomNavBar from "../COMPONENTS/accessibility-navbar.vue"
 
 export default {
     name: 'LoginPage',
-    components: {MmwLogoWide},
+    components: {
+        mmwLogoWide,
+        bottomNavBar,
+    },
     data() {
         return {
-
+            usernamePlaceholder: "mateuszpodeszwa@mainlinemenswear.co.uk",
+            passwordPlaceholder: "************",
+            usernameLabel: "Username",
+            passwordLabel: "Password"
         };
     },
     methods: {
 
+    },
+    mounted() {
+        gsap.from(
+            ".box_login-ANIMATION",
+            {
+                boxShadow: "0px 0px 0px 0px #4DA2D4, 0px 0px 0px 0px #107CBC",
+                duration: 1.25,
+                ease: "back.out(1)",
+                delay: 0.8225
+            }
+        );
+        gsap.fromTo(
+            ".background_slide-ANIMATION",
+            {
+                background: "linear-gradient(90deg, #107CBC 0%, #4DA2D4 0%)"
+            },
+            {
+                background: "linear-gradient(90deg, #107CBC 50%, #4DA2D4 50%)",
+                delay: 0.55,
+                ease: "elastic.out(1,0.80)",
+                duration: 0.85
+            }
+        );
     }
 };
-
-import mmwLogoWide from '../COMPONENTS/mmw-logo-wide.vue';
 </script>
 
 <style scoped lang="sass">
@@ -54,6 +77,7 @@ import mmwLogoWide from '../COMPONENTS/mmw-logo-wide.vue';
     $MainBackgroundColor: getColor(background, primary)
     $SecondaryBackgroundColor: getColor(background, secondary)
     $MainBackgroundComponentColor: getColor(backgroundComponents, BasicWindow)
+    $ColorTitle: getColor(content, textTitle)
     $LoginBoxBase: 525px
     $LoginBoxSize: (min(100vw, max($LoginBoxBase, 20vw)), min($LoginBoxBase, 100vh), 800px) // nth: 1: width, 2: height
     $BreakingPoint: externall.$MobileBreakingPoint
@@ -65,11 +89,8 @@ import mmwLogoWide from '../COMPONENTS/mmw-logo-wide.vue';
 
     // Edit the background colour
     section.BACKGROUND
-        background-color: $SecondaryBackgroundColor
-        background: -moz-linear-gradient(90deg, $SecondaryBackgroundColor 50%, $MainBackgroundColor 50%)
-        background: -webkit-linear-gradient(90deg, $SecondaryBackgroundColor 50%, $MainBackgroundColor 50%)
         background: linear-gradient(90deg, $SecondaryBackgroundColor 50%, $MainBackgroundColor 50%)
-        @media (max-width: $BreakingPoint)
+        @media (width <= $BreakingPoint)
             background: $MainBackgroundColor
 
     // Edit first element in <section>
@@ -86,20 +107,28 @@ import mmwLogoWide from '../COMPONENTS/mmw-logo-wide.vue';
     // Edit BACKGROUND of login_box
     .login_box-BACKGROUND
         background-color: $MainBackgroundComponentColor
-        @include opposite-corner-shadow-offset(30px)
+        @media (width > $BreakingPoint)
+            @include opposite-corner-shadow-offset(30px)
 
     .login_box-GRID
         display: grid
         grid-template-rows: 75px 1fr
         gap: 2.525rem
         padding: 45px
+        @media (max-width: 500px)
+            padding-left: 10px
+            padding-right: 10px
 
     .login_box-ITEMS
         // background-color: darken($MainBackgroundComponentColor, 2.5)
         padding: 2.5px
 
+    .ITEM_1
+        max-width: max(80%, 100vwmin)
+        justify-self: center
+
     .ITEM_1 > .img-logo
-        background-image: url("../../../public/images/mmw-logo-wide-high.png")
+        // background-image: url("../../../public/images/mmw-logo-wide-high.png")
         background-size: contain
         background-position: center
         background-repeat: no-repeat
@@ -126,9 +155,10 @@ import mmwLogoWide from '../COMPONENTS/mmw-logo-wide.vue';
         label, p
             margin-bottom: 15px
             line-height: 150% /* 27px */
-            letter-spacing: -0.142px
-            font-family: Arial
+            color: $ColorTitle
 
+    input[type=text]:focus
+        background-color: lightblue
 
 </style>
 
