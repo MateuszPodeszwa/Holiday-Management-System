@@ -2,7 +2,7 @@
 
     <section class="BACKGROUND grid h-screen w-screen background_slide-ANIMATION">
         <div class="login_box-BACKGROUND box_login-ANIMATION login_box-GRID">
-            <div class="ITEM_1 login_box-ITEMS"><keep-alive><mmw-logo-wide class="img-logo" /></keep-alive></div>
+            <div class="ITEM_1 login_box-ITEMS"><mmw-logo-wide class="img-logo" /></div>
             <div class="ITEM_2 login_box-ITEMS">
                 <span>
                     <keep-alive><p><label for="username">{{ usernameLabel }}</label></p></keep-alive>
@@ -63,6 +63,16 @@ export default {
                 duration: 0.85
             }
         );
+        gsap.from(
+            ".bottom_navbar",
+            {
+                y: +200,
+                duration: 1,
+                delay: 1,
+                ease: "elastic.out(0.8,0.8)"
+            }
+
+        );
     }
 };
 </script>
@@ -78,7 +88,7 @@ export default {
     $SecondaryBackgroundColor: getColor(background, secondary)
     $MainBackgroundComponentColor: getColor(backgroundComponents, BasicWindow)
     $ColorTitle: getColor(content, textTitle)
-    $LoginBoxBase: 525px
+    $LoginBoxBase: 520px
     $LoginBoxSize: (min(100vw, max($LoginBoxBase, 20vw)), min($LoginBoxBase, 100vh), 800px) // nth: 1: width, 2: height
     $BreakingPoint: externall.$MobileBreakingPoint
 
@@ -86,6 +96,11 @@ export default {
     @mixin opposite-corner-shadow-offset($offset)
         $opposite-offset: -$offset
         box-shadow: $offset $offset $SecondaryBackgroundColor, $opposite-offset $opposite-offset $MainBackgroundColor
+
+    section, body
+        overflow: hidden
+        max-height: 100vmin
+        scrollbar-width: none
 
     // Edit the background colour
     section.BACKGROUND
@@ -158,7 +173,7 @@ export default {
             color: $ColorTitle
 
     input[type=text]:focus
-        background-color: lightblue
+        background-color: cornflowerblue
 
 </style>
 
