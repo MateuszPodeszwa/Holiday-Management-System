@@ -1,7 +1,8 @@
 <template>
-    <div class="Main">
+    <div @mouseleave="toggleVisibilityOn()" @mouseenter="toggleVisibilityOff()" class="Main" :class="{ 'Main-off': isMenuHidden === true }">
             <div
-                class="ub-menu-content flex items-center justify-center"
+                class="sub-menu-content flex items-center justify-center"
+                :class="{ 'sub-menu-content-off': isMenuHidden === true }"
             >
                 <a href="#" @click="toggleSubmenu" class="content_link flex-grow text-center">{{ accessibilityExpand }}</a>
 
@@ -31,6 +32,7 @@ export default {
             selectedOption: null,
             showSubmenu: false,
             accessibilityExpand: "Accessibility Options",
+            isMenuHidden: true,
         };
     },
     methods: {
@@ -39,6 +41,12 @@ export default {
         },
         toggleSubmenu() {
             this.showSubmenu = !this.showSubmenu;
+        },
+        toggleVisibilityOn() {
+            this.isMenuHidden = true;
+        },
+        toggleVisibilityOff() {
+            this.isMenuHidden = false;
         },
     },
 };
@@ -49,7 +57,7 @@ export default {
     $WidthBar: 70%
     $MaxHeightBar: 80px
     $BackColBar: whitesmoke
-    $BottomPaddingBar: 10px
+    $BottomPaddingBar: 5px
     $BorderRadiusBar: 4px
     $PaddingDefaultBar: 25px
 
@@ -67,6 +75,7 @@ export default {
         padding: $PaddingDefaultBar
         position: absolute
         flex-shrink: 0
+        transition: padding 0.1s ease
         a
             // font-size: 20px
             font-style: normal
@@ -76,6 +85,10 @@ export default {
     .selected
         color: blue
 
-    .sub-menu-animation-enter-active, .sub-menu-animation-leave-active
-        // transition: all 1s ease
+    .sub-menu-content-off
+        display: none
+    div.Main-off
+        padding: 0
+        height: 10px
+        transition: padding 0.1s ease
 </style>

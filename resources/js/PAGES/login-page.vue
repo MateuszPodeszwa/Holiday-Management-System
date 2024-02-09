@@ -71,7 +71,6 @@ export default {
                 delay: 1,
                 ease: "elastic.out(0.8,0.8)"
             }
-
         );
     }
 };
