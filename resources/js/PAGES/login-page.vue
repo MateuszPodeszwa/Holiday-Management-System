@@ -23,6 +23,7 @@
 import gsap from "gsap";
 import mmwLogoWide from "../COMPONENTS/mmw-logo-wide.vue";
 import bottomNavBar from "../COMPONENTS/accessibility-navbar.vue"
+import { useMagicKeys } from '@vueuse/core';
 
 export default {
     name: 'LoginPage',

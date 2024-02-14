@@ -19,7 +19,7 @@ export  default {
     data() {
         return {
             isScreenSizeSupported: true,
-            isLoading: false,
+            isLoading: true,
         };
     },
     created() {
@@ -32,7 +32,7 @@ export  default {
     mounted() {
         setTimeout(() => {
             this.isLoading = false;
-        }, 0);
+        }, 250);
     },
     methods: {
         checkScreenSize() {
@@ -55,7 +55,7 @@ export  default {
             next(vm => {
                 vm.isLoading = false;
             });
-        }, 0); // Adjust the timeout duration as needed
+        }, 100); // Adjust the timeout duration as needed
     },
 };
 </script>
