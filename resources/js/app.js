@@ -2,6 +2,7 @@ import './bootstrap';
 import { createApp } from 'vue';
 import * as VueRouter from "vue-router";
 import WelcomePage from './PAGES/welcome-page.vue'
+import VueParticles from 'vue-particles'
 
 import App from './app.vue'
 import LoginPage from "./PAGES/login-page.vue";
@@ -27,3 +28,4 @@ const app = createApp(App);
 
 app.use(router)
 app.mount('#app')
+App.use(VueParticles)

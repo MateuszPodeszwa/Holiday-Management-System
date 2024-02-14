@@ -1,75 +1,93 @@
 <template>
     <!-- Blurred Image Component -->
-    <div class="blurred-img">
-        <img src="../../../public/images/highres.jpg" loading="lazy" @load="loaded"  alt=""/>
-    </div>
+    <span class="blurred-img blurred-img-blurred" id="assign-blurred">
+        <img src="../../../public/images/mmw-logo-wide-high.png" loading="lazy" @load="loaded" alt=""/>
+    </span>
 </template>
 
 <script>
-export default {
-    data() {
-        return {
-            isLoaded: false,
-        };
-    },
-    methods: {
-        loaded() {
-            const blurredImageDiv = document.querySelector(".blurred-img")
-            const img = blurredImageDiv.querySelector("img")
-            function loaded() {
-                blurredImageDiv.classList.add("loaded")
-            }
-
-            if (img.complete) {
-                loaded()
-            } else {
-                img.addEventListener("load", loaded)
-            }
+    export default {
+        data() {
+            return {
+                isLoaded: false,
+            };
         },
-    },
-};
+        methods: {
+            loaded() {
+                const blurredImageDiv = document.querySelector(".blurred-img")
+                const img = blurredImageDiv.querySelector("img")
+                const blurredElement = document.getElementById('assign-blurred')
+
+
+                setTimeout(function loaded() {
+                    blurredImageDiv.classList.add("loaded")
+                    blurredElement.classList.remove('blurred-img-blurred')
+                }, 0);
+
+                if (img.complete) {
+                    this.loaded()
+                } else {
+                    img.addEventListener("load", this.loaded)
+                }
+
+            },
+        },
+    };
 </script>
 
 <style scoped>
-.blurred-img {
-    background-image: url("../../../public/images/lowres.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-}
 
-.blurred-img::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    animation: pulse 2.5s infinite;
-    background-color: white;
-}
+    span, img {
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
 
-.blurred-img.loaded::before {
-    animation: none;
-    content: none;
-}
+    .blurred-img {
+        background-image: url("../../../public/images/mmw-logo-wide-high.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+    }
 
-.blurred-img img {
-    opacity: 0;
-    transition: opacity 250ms ease-in-out;
-}
+    .blurred-img-blurred {
+        filter: blur(3px);
+    }
 
-.blurred-img.loaded img {
-    opacity: 1;
-}
-
-@keyframes pulse {
-    0% {
+    .blurred-img::before {
+        content: "";
+        position: absolute;
+        inset: 0;
         opacity: 0;
+        animation: pulse 2.5s infinite;
+        background-color: white;
     }
-    50% {
-        opacity: 0.1;
+
+    .blurred-img.loaded::before {
+        animation: none;
+        content: none;
     }
-    100% {
-        opacity: 0;
+
+    .blurred-img img {
+        opacity: 0.8;
+        transition: opacity 250ms ease-in-out;
     }
-}
+
+    .blurred-img.loaded img {
+        opacity: 1;
+    }
+
+    @keyframes pulse {
+        0% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 0.1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
 </style>
