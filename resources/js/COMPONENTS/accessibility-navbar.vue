@@ -1,5 +1,5 @@
 <template>
-    <div @mouseleave="toggleVisibilityOn()" @mouseenter="toggleVisibilityOff()" class="Main" :class="{ 'Main-off': isMenuHidden === true }">
+    <div @mouseleave="toggleVisibilityOff()" @mouseenter="toggleVisibilityOn()" class="Main" :class="{ 'Main-off': isMenuHidden === true }">
             <div
                 class="sub-menu-content flex items-center justify-center"
                 :class="{ 'sub-menu-content-off': isMenuHidden === true }"
@@ -35,7 +35,7 @@
 export default {
     data() {
         return {
-            selectedOption: null,
+            selectedOption: 0,
             showSubmenu: false,
             accessibilityExpand: "Accessibility Options",
             isMenuHidden: true,
@@ -43,16 +43,19 @@ export default {
     },
     methods: {
         selectOption(option) {
-            this.selectedOption = this.selectedOption === option ? null : option;
+            this.selectedOption = this.selectedOption === option ? 0 : option;
+            if (this.selectedOption > 0)
+                this.toggleVisibilityOn()
         },
         toggleSubmenu() {
             this.showSubmenu = !this.showSubmenu;
         },
         toggleVisibilityOn() {
-            this.isMenuHidden = true;
+            this.isMenuHidden = false;
         },
         toggleVisibilityOff() {
-            this.isMenuHidden = false;
+            if (!this.selectedOption > 0)
+                this.isMenuHidden = true;
         },
     },
 };
@@ -106,5 +109,6 @@ export default {
     div.Main-off
         padding: 0
         height: 10px
+        animation-delay: 250ms
         transition: padding 0.1s ease
 </style>
