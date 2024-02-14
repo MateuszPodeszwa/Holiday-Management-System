@@ -1,48 +1,12 @@
-<template>
-
-    <section class="BACKGROUND grid h-screen w-screen background_slide-ANIMATION">
-        <div class="login_box-BACKGROUND box_login-ANIMATION login_box-GRID">
-            <div class="ITEM_1 login_box-ITEMS"><mmw-logo-wide class="img-logo" /></div>
-            <div class="ITEM_2 login_box-ITEMS">
-                <span>
-                    <keep-alive><p><label for="username">{{ usernameLabel }}</label></p></keep-alive>
-                    <input type="email" id="username" :placeholder="usernamePlaceholder">
-                </span>
-                <span>
-                    <p><label for="password">{{ passwordLabel }}</label></p>
-                    <input type="password" id="password" :placeholder="passwordPlaceholder">
-                </span>
-            </div>
-        </div>
-        <bottom-nav-bar class="bottom_navbar"/>
-    </section>
-
-</template>
-
 <script>
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import { Link } from '@inertiajs/vue3';
 import gsap from "gsap";
-import mmwLogoWide from "../COMPONENTS/mmw-logo-wide.vue";
-import bottomNavBar from "../COMPONENTS/accessibility-navbar.vue"
-import { useMagicKeys } from '@vueuse/core';
-import {watch, watchEffect} from "vue";
-
-const { shift, space, a } = useMagicKeys()
-
-watch(space, (v) => {
-    if (v)
-        console.log('space has been pressed')
-})
-
-watchEffect(() => {
-    if (shift.value && a.value)
-        console.log('shift + a have been pressed')
-})
 
 export default {
     name: 'LoginPage',
     components: {
-        mmwLogoWide,
-        bottomNavBar,
+        ApplicationLogo,
     },
     data() {
         return {
@@ -90,7 +54,19 @@ export default {
 };
 </script>
 
-<style scoped lang="sass">
+<template>
+    <section class="BACKGROUND grid h-screen w-screen background_slide-ANIMATION">
+        <div class="login_box-BACKGROUND box_login-ANIMATION login_box-GRID">
+            <div class="ITEM_1 login_box-ITEMS"><application-logo class="img-logo" /></div>
+            <div class="ITEM_2 login_box-ITEMS">
+                <slot />
+            </div>
+        </div>
+<!--        <bottom-nav-bar class="bottom_navbar"/>-->
+    </section>
+</template>
+
+<style lang="sass" scoped>
     // Importing local files
     @use '../../sass/abstracts' as *
     @use "../../sass/base" as base
@@ -135,6 +111,7 @@ export default {
     // Edit BACKGROUND of login_box
     .login_box-BACKGROUND
         background-color: $MainBackgroundComponentColor
+        border-radius: 6px
         @media (width > $BreakingPoint)
             @include opposite-corner-shadow-offset(30px)
 
@@ -168,28 +145,23 @@ export default {
         flex-direction: column
         margin: 0 15px
 
-        input
+        ::slotted(.input)
             height: 70px
             padding-left: 20px
             box-sizing: border-box
             margin: 0
             background-color: #C9E0F2
 
-        span
+        ::slotted(.span)
             flex: 0
             margin: 0 0 25px 0
             padding: 0
 
-        label, p
+        ::slotted(.label, .p)
             margin-bottom: 15px
             line-height: 150% /* 27px */
             color: $ColorTitle
 
     input[type=text]:focus
         background-color: cornflowerblue
-
-</style>
-
-<style scoped lang="css">
-
 </style>
