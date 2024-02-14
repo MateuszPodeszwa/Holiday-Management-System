@@ -24,6 +24,19 @@ import gsap from "gsap";
 import mmwLogoWide from "../COMPONENTS/mmw-logo-wide.vue";
 import bottomNavBar from "../COMPONENTS/accessibility-navbar.vue"
 import { useMagicKeys } from '@vueuse/core';
+import {watch, watchEffect} from "vue";
+
+const { shift, space, a } = useMagicKeys()
+
+watch(space, (v) => {
+    if (v)
+        console.log('space has been pressed')
+})
+
+watchEffect(() => {
+    if (shift.value && a.value)
+        console.log('shift + a have been pressed')
+})
 
 export default {
     name: 'LoginPage',
