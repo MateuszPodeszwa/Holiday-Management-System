@@ -17,7 +17,6 @@ $colors: (
     // Menu Bar Shades
     menuComponents: (
         background: #3498db,
-        text: #ffffff,
         hover: #2980b9,
     ),
 
@@ -25,7 +24,8 @@ $colors: (
     content: (
         textTitle: #0D4667,
         textLink: #9b59b6,
-        border: #bdc3c7,
+        textHover: #4DA2D4,
+        textActive: #107CBC,
     ),
 
     // Settings Option Shades
