@@ -2,11 +2,13 @@
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import { Link } from '@inertiajs/vue3';
 import gsap from "gsap";
+import FloatingBar from "@/Components/FloatingBar.vue";
 
 export default {
     name: 'LoginPage',
     components: {
         ApplicationLogo,
+        FloatingBar,
     },
     data() {
         return {
@@ -62,7 +64,7 @@ export default {
                 <slot />
             </div>
         </div>
-<!--        <bottom-nav-bar class="bottom_navbar"/>-->
+        <FloatingBar class="bottom_navbar"/>
     </section>
 </template>
 
@@ -76,9 +78,8 @@ export default {
     $MainBackgroundColor: getColor(background, primary)
     $SecondaryBackgroundColor: getColor(background, secondary)
     $MainBackgroundComponentColor: getColor(backgroundComponents, BasicWindow)
-    $ColorTitle: getColor(content, textTitle)
     $LoginBoxBase: 520px
-    $LoginBoxSize: (min(100vw, max($LoginBoxBase, 20vw)), min($LoginBoxBase, 100vh), 800px) // nth: 1: width, 2: height
+    $LoginBoxSize: (min(100vw, max($LoginBoxBase, 20vw)), min(fit-content, 100vh), $LoginBoxBase) // nth: 1: width, 2: height
     $BreakingPoint: externall.$MobileBreakingPoint
 
     // Mixin to calculate opposite shadow offset for corners
@@ -87,8 +88,8 @@ export default {
         box-shadow: $offset $offset $SecondaryBackgroundColor, $opposite-offset $opposite-offset $MainBackgroundColor
 
     section, body
-        overflow: hidden
-        max-height: 100vmin
+        overflow: auto
+        max-height: 100vh
         scrollbar-width: none
 
     // Edit the background colour
@@ -125,6 +126,7 @@ export default {
             padding-right: 10px
 
     .login_box-ITEMS
+        // Uncomment to see the grid boundaries
         // background-color: darken($MainBackgroundComponentColor, 2.5)
         padding: 2.5px
 
@@ -144,24 +146,4 @@ export default {
         display: flex
         flex-direction: column
         margin: 0 15px
-
-        ::slotted(.input)
-            height: 70px
-            padding-left: 20px
-            box-sizing: border-box
-            margin: 0
-            background-color: #C9E0F2
-
-        ::slotted(.span)
-            flex: 0
-            margin: 0 0 25px 0
-            padding: 0
-
-        ::slotted(.label, .p)
-            margin-bottom: 15px
-            line-height: 150% /* 27px */
-            color: $ColorTitle
-
-    input[type=text]:focus
-        background-color: cornflowerblue
 </style>

@@ -38,10 +38,10 @@ const submit = () => {
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
-      <keep-alive>
+    <keep-alive>
         <form @submit.prevent="submit">
             <span>
-              <p class="p"><InputLabel for="email" value="Email" class="label"/></p>
+              <p><InputLabel for="email" value="Email" class="label"/></p>
 
                 <TextInput
                     id="email"
@@ -55,14 +55,14 @@ const submit = () => {
 
                 <InputError class="mt-2" :message="form.errors.email" />
             </span>
-
+            <br>
             <span class="mt-4">
-                <p class="p"><InputLabel for="password" value="Password" /></p>
+                <p><InputLabel for="password" value="Password" class="label"/></p>
 
                 <TextInput
                     id="password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full input"
                     v-model="form.password"
                     required
                     autocomplete="current-password"
@@ -71,10 +71,10 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password" />
             </span>
 
-            <div class="block mt-4">
+            <div class="block">
                 <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600">Remember me</span>
+                    <Checkbox class="checkbox-fix" name="remember" v-model:checked="form.remember" />
+                    <span style="flex: 1" class="text-sm text-gray-600">Remember Me</span>
                 </label>
             </div>
 
@@ -92,8 +92,42 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
-      </keep-alive>
+    </keep-alive>
     </GuestLayout>
 </template>
+
+<style lang="sass" scoped>
+    // Importing local files
+    @use '../../../sass/abstracts' as *
+    @use "../../../sass/base" as base
+    @use "../../../sass/abstracts/variables" as externall
+
+    // Define local variables
+    $ColorTitle: getColor(content, textTitle)
+    $InputColor: getColor(content, inputBackground)
+
+    input
+        height: 70px
+        padding-left: 20px
+        box-sizing: border-box
+        margin: 0
+        background-color: $InputColor
+
+    span
+        flex: 0
+        margin: 10px 0 0 0
+        padding: 0
+
+    label, p
+        margin-bottom: 15px
+        line-height: 150% /* 27px */
+        color: $ColorTitle
+
+    .checkbox-fix
+        height: 25px
+        margin-right: 20px
+        margin-top: 10px
+
+</style>
 
 
