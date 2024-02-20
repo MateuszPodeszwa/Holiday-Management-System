@@ -15,15 +15,23 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/pagesizeerror', function () {
+    return Inertia::render('PageSizeError');
+})->name('pagesizeerror');
+
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('Auth/Login', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('/t1', function () {
+   return Inertia::render('Auth/LoginTest');
+})->name('login-test');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

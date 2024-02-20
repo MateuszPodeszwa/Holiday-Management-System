@@ -79,6 +79,7 @@ $PaddingDefaultBar: 25px
 
 *
     overflow: hidden
+
 div.Main
     width: $WidthBar
     max-height: $MaxHeightBar

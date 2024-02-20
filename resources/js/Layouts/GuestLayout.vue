@@ -49,6 +49,8 @@ export default {
                 y: +200,
                 duration: 1,
                 delay: 1,
+                display: 0,
+                opacity: 0,
                 ease: "elastic.out(0.8,0.8)"
             }
         );
@@ -88,7 +90,7 @@ export default {
         box-shadow: $offset $offset $SecondaryBackgroundColor, $opposite-offset $opposite-offset $MainBackgroundColor
 
     section, body
-        overflow: auto
+        overflow: hidden
         max-height: 100vh
         scrollbar-width: none
 
