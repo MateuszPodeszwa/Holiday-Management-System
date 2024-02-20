@@ -15,10 +15,6 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/pagesizeerror', function () {
-    return Inertia::render('PageSizeError');
-})->name('pagesizeerror');
-
 
 Route::get('/', function () {
     return Inertia::render('Auth/Login', [
@@ -36,6 +32,10 @@ Route::get('/t1', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/', function () {
+    return redirect()->route('dashboard'); // Redirect logged-in users to the dashboard
+})->middleware(['guest']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
