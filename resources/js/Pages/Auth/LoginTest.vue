@@ -269,6 +269,27 @@ section > :first-child
 .checkbox-fix
     padding-left: 20px
 
+@media (max-width: $BreakingPoint)
+    section > :first-child
+        width: 100%
+        height: 100vh
+
+    [class*="login_box"]
+        grid-template-rows: 1fr
+
+    .login_box-ITEMS
+        margin: 0
+
+    .ITEM_1
+        max-width: 100%
+        max-height: 100px
+
+    .ITEM_2
+        margin: 0
+
+    input[id="username"], input[id="password"]
+        height: 60px
+
 </style>
 
 <style scoped lang="css">
