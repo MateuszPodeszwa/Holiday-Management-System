@@ -34,15 +34,25 @@ export default {
     },
 };
 </script>
-
+//https://css-tricks.com/the-complete-guide-to-lazy-loading-images/
+//https://css-tricks.com/lazy-loading-images-with-vue-js-directives-and-intersection-observer/
 <style scoped>
 
-span, img {
+span {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    max-width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
 }
 
 .blurred-img {

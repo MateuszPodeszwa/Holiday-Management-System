@@ -94,7 +94,6 @@ const form = useForm({
     remember: false,
 });
 </script>
-
 <script>
 import gsap from "gsap";
 import mmwLogoWide from "@/Components/ApplicationLogo.vue";
@@ -291,8 +290,30 @@ section > :first-child
         line-height: 150% /* 27px */
         color: $ColorTitle
 
-.checkbox-fix
-    padding-left: 20px
+    .checkbox-fix
+        padding-left: 20px
+
+@media only screen and (max-width: 480px)
+    section
+        width: 100%
+        height: 100%
+        padding: 0
+        margin: 0
+    .login_box-GRID
+        grid-template-rows: 1fr 2fr
+        gap: 0
+        padding: 40px 10px
+    .ITEM_1
+        width: fit-content
+        height: auto
+        overflow: hidden
+    .img-logo
+        width: 100%
+        height: auto
+        display: block
+        max-width: 100%
+        margin: 0 auto
+
 
 </style>
 
