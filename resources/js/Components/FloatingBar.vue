@@ -10,10 +10,12 @@
                 <a v-if="showSubmenu === false" href="#" class="content_link flex-grow text-left">>></a>
                 <a v-if="showSubmenu === false" @click="selectOption(2);" href="#" class="content_link flex-grow text-center">
                     <span :class="{ 'selected': selectedOption === 2 }">Option 2</span></a>
-                <a v-if="showSubmenu === false" @click="selectOption(3);" href="#" class="content_link flex-grow text-center">
-                    <span :class="{ 'selected': selectedOption === 3 }">Option 3</span></a>
-                <a v-if="showSubmenu === false" @click="selectOption(4);" href="#" class="content_link flex-grow text-center">
-                    <span :class="{ 'selected': selectedOption === 4 }">Option 4</span></a>
+                <a v-if="showSubmenu === false" @click="selectOption(3);" :href="route('register')" class="content_link flex-grow text-center">
+                    <span :class="{ 'selected': selectedOption === 3 }">Register</span></a>
+                <a v-if="showSubmenu === false" @click="selectOption(4);" :href="route('password.request')" class="content_link flex-grow text-center">
+                    <span :class="{ 'selected': selectedOption === 4 }">
+                        Reset Password
+                    </span></a>
             </transition-group>
             <transition-group name="sub-menu-animation">
                 <a v-if="showSubmenu === true" @click="selectOption(6);" href="#" class="content_link flex-grow text-left">
@@ -32,7 +34,10 @@
 </template>
 
 <script>
+import {Link} from "@inertiajs/vue3";
+
 export default {
+    components: {Link},
     data() {
         return {
             selectedOption: 0,
