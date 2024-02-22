@@ -6,7 +6,7 @@
 
     <section class="BACKGROUND grid h-screen w-screen background_slide-ANIMATION">
         <div class="login_box-BACKGROUND box_login-ANIMATION login_box-GRID">
-            <div class="ITEM_1 login_box-ITEMS"><keep-alive><mmw-logo-wide class="img-logo" /></keep-alive></div>
+            <div class="ITEM_1 login_box-ITEMS"><mmw-logo-wide class="img-logo" /></div>
             <div class="ITEM_2 login_box-ITEMS">
                 <form @submit.prevent="submit">
                 <span>
@@ -35,12 +35,13 @@
                     <InputError class="mt-2" :message="form.errors.password" />
                 </span>
 
-                <span class="block">
+<!--                <span class="block">
                     <label for="checkbox_remember" class="flex items-center"><span style="flex: 1; margin-right: 15px">Remember Me</span>
                     <Checkbox id="checkbox_remember" name="remember" style="height: 25px;" v-model:checked="form.remember" />
                     </label>
-                </span>
-
+                </span>-->
+                <br>
+                <br>
                 <div class="flex items-center justify-end mt-4">
                     <Link
                         v-if="canResetPassword"
@@ -57,9 +58,7 @@
                 </form>
             </div>
         </div>
-        <bottom-nav-bar class="bottom_navbar">
-
-        </bottom-nav-bar>
+        <bottom-nav-bar style="overflow: hidden" class="bottom_navbar" />
     </section>
 
 </template>
@@ -197,6 +196,9 @@ $InputColor: getColor(content, inputBackground)
     $opposite-offset: -$offset
     box-shadow: $offset $offset $SecondaryBackgroundColor, $opposite-offset $opposite-offset $MainBackgroundColor
 
+*
+    overflow: hidden !important
+
 section, body
     overflow: hidden
     max-height: 100vh
@@ -294,25 +296,7 @@ section > :first-child
         padding-left: 20px
 
 @media only screen and (max-width: 480px)
-    section
-        width: 100%
-        height: 100%
-        padding: 0
-        margin: 0
-    .login_box-GRID
-        grid-template-rows: 1fr 2fr
-        gap: 0
-        padding: 40px 10px
-    .ITEM_1
-        width: fit-content
-        height: auto
-        overflow: hidden
-    .img-logo
-        width: 100%
-        height: auto
-        display: block
-        max-width: 100%
-        margin: 0 auto
+
 
 
 </style>
