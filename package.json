@@ -4,7 +4,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "serve":  "vite & php artisan serve"
+        "serve": "vite & php artisan serve"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
@@ -12,18 +12,19 @@
         "@vitejs/plugin-vue": "^5.0.0",
         "autoprefixer": "^10.4.12",
         "axios": "^1.6.4",
+        "gsap": "^3.12.5",
         "laravel-vite-plugin": "^1.0.0",
         "postcss": "^8.4.31",
+        "sass": "^1.70.0",
+        "tailwind": "^4.0.0",
         "tailwindcss": "^3.2.1",
         "vite": "^5.0.0",
         "vue": "^3.4.0",
-        "gsap": "^3.12.5",
-        "sass": "^1.70.0",
-        "tailwind": "^4.0.0",
         "vue-particles": "^1.0.9"
     },
     "dependencies": {
         "@vueuse/core": "^10.7.2",
+        "lazysizes": "^5.3.2",
         "vue": "^3.4.15",
         "vue-router": "^4.2.5"
     }
