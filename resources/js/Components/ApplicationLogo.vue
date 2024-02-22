@@ -1,36 +1,32 @@
 <template>
     <!-- Blurred Image Component -->
-    <span class="blurred-img blurred-img-blurred" id="assign-blurred">
-        <img src="../../../public/images/mmw-logo-wide-high.png" loading="lazy" @load="loaded" alt=""/>
-    </span>
+    <span>
+    <img
+        class="lazyload blur-up"
+        data-src="http://127.0.0.1:5173/public/images/mmw-logo-wide-high.png"
+        data-lowsrc="http://127.0.0.1:5173/public/images/mmw-logo-wide-low.png"
+        alt="Mainline Menswear Logo"
+        data-sizes="auto"
+    />
+</span>
+
+
 </template>
 
 <script>
+import 'lazysizes';
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
+import 'lazysizes/plugins/blur-up/ls.blur-up';
+import lazySizes from "lazysizes";
+lazySizes.cfg.blurupMode = 'auto';
 export default {
     data() {
         return {
-            isLoaded: false,
+
         };
     },
     methods: {
-        loaded() {
-            const blurredImageDiv = document.querySelector(".blurred-img")
-            const img = blurredImageDiv.querySelector("img")
-            const blurredElement = document.getElementById('assign-blurred')
 
-
-            setTimeout(function loaded() {
-                blurredImageDiv.classList.add("loaded")
-                blurredElement.classList.remove('blurred-img-blurred')
-            }, 0);
-
-            if (img.complete) {
-                this.loaded()
-            } else {
-                img.addEventListener("load", this.loaded)
-            }
-
-        },
     },
 };
 </script>
@@ -45,59 +41,24 @@ span {
     max-width: 100%;
     height: auto;
     overflow: hidden;
+    object-fit: cover;
 }
 
 img {
-    width: 100%;
-    height: auto;
+    width: auto; max-width: 100%;
+    height: 100%;
     display: block;
-    max-width: 100%;
+    aspect-ratio: auto;
     margin: 0 auto;
 }
-
-.blurred-img {
-    background-image: url("../../../public/images/mmw-logo-wide-high.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-}
-
-.blurred-img-blurred {
+.blur-up {
+    -webkit-filter: blur(3px);
     filter: blur(3px);
+    transition: filter 400ms, -webkit-filter 400ms;
 }
 
-.blurred-img::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    animation: pulse 2.5s infinite;
-    background-color: white;
-}
-
-.blurred-img.loaded::before {
-    animation: none;
-    content: none;
-}
-
-.blurred-img img {
-    opacity: 0.8;
-    transition: opacity 250ms ease-in-out;
-}
-
-.blurred-img.loaded img {
-    opacity: 1;
-}
-
-@keyframes pulse {
-    0% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 0.1;
-    }
-    100% {
-        opacity: 0;
-    }
+.blur-up.lazyloaded {
+    -webkit-filter: blur(0);
+    filter: blur(0);
 }
 </style>
