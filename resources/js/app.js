@@ -10,13 +10,12 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 // Function to check screen width and page height
 function checkScreenSize() {
-    console.log('1');
     const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     const pageHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
 
-    return screenWidth < 500 || pageHeight < 500;
+    return screenWidth < 200 || pageHeight < 400;
 }
-window.addEventListener('resize', checkScreenSize);
+// window.addEventListener('resize', checkScreenSize);
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
