@@ -5,6 +5,7 @@
         class="lazyload blur-up"
         data-src="http://127.0.0.1:5173/public/images/mmw-logo-wide-high.png"
         data-lowsrc="http://127.0.0.1:5173/public/images/mmw-logo-wide-low.png"
+        lo
         alt="Mainline Menswear Logo"
         data-sizes="auto"
     />
