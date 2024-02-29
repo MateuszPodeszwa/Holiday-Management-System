@@ -1,8 +1,13 @@
 <template>
-
-    <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-        {{ status }}
-    </div>
+    <VuePreloader
+        class="VuePreloader"
+        style="height: 100%"
+        transition-type="fade-up"
+        :loading-speed="0"
+        :transition-speed="400"
+        @loading-is-over="loadingIsOver"
+        @transition-is-over="transitionIsOver"
+    ></VuePreloader>
 
     <section class="BACKGROUND grid h-screen w-screen background_slide-ANIMATION">
         <div class="login_box-BACKGROUND box_login-ANIMATION login_box-GRID">
@@ -14,13 +19,13 @@
                     <input
                         type="email"
                         id="username"
+                        @keyup.enter="focusOnPassword"
                         :placeholder="usernamePlaceholder"
                         v-model="form.email"
                         required
                         autofocus
                         autocomplete="username"
                     >
-                    <InputError class="mt-2" :message="form.errors.email" />
                 </span>
                 <span>
                     <p><label for="password">{{ passwordLabel }}</label></p>
@@ -29,20 +34,22 @@
                         id="password"
                         :placeholder="passwordPlaceholder"
                         v-model="form.password"
+                        @keyup.enter="submit"
+                        ref="passwordInput"
                         required
                         autocomplete="current-password"
                     >
-                    <InputError class="mt-2" :message="form.errors.password" />
                 </span>
 
 <!--                <span class="block">
                     <label for="checkbox_remember" class="flex items-center"><span style="flex: 1; margin-right: 15px">Remember Me</span>
                     <Checkbox id="checkbox_remember" name="remember" style="height: 25px;" v-model:checked="form.remember" />
                     </label>
-                </span>-->
+                </span>
+-->
                 <br>
                 <br>
-                <div class="flex items-center justify-end mt-4">
+<!--                <div class="flex items-center justify-end mt-4">
                     <Link
                         v-if="canResetPassword"
                         :href="route('password.request')"
@@ -55,45 +62,40 @@
                         Log in
                     </PrimaryButton>
                 </div>
+-->
                 </form>
+                <transition-group name="button-scale" id="button_scale">
+                    <PrimaryButton
+                        v-show="form.email && form.password"
+                        @click="submit"
+                        class="ms-4"
+                        :class="{ 'opacity-25': form.processing }"
+                        :disabled="form.processing"
+                        :v-model="form.submit"
+                    >
+                        Log in
+                    </PrimaryButton>
+                </transition-group>
+
             </div>
         </div>
-        <bottom-nav-bar style="overflow: hidden" class="bottom_navbar" />
+        <bottom-nav-bar v-if="shouldShowElement()" style="overflow: hidden" class="bottom_navbar" />
+        <transition-group>
+            <div v-if="status" class="mb-4 font-medium text-sm text-green-600">{{ status }}</div>
+            <InputError class="mt-2 animation_error card" :message="form.errors.email" />
+            <InputError class="mt-2 animation_error card" :message="form.errors.password" />
+        </transition-group>
     </section>
 
 </template>
 
-<script setup>
-// Define types, to render content using v-if
+
+<script>
 import InputError from "@/Components/InputError.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {Link} from "@inertiajs/vue3";
-
-defineProps({
-    canResetPassword: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
-});
-
-// Submit
-const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
-    });
-};
-
-// Form
-const form = useForm({
-    email: '',
-    password: '',
-    remember: false,
-});
-</script>
-<script>
+import { VuePreloader } from 'vue-preloader';
+import '/node_modules/vue-preloader/dist/style.css'
 import gsap from "gsap";
 import mmwLogoWide from "@/Components/ApplicationLogo.vue";
 import bottomNavBar from "@/Components/FloatingBar.vue"
@@ -106,6 +108,19 @@ export default {
     components: {
         mmwLogoWide,
         bottomNavBar,
+        InputError,
+        Checkbox,
+        PrimaryButton,
+        VuePreloader,
+    },
+
+    props: {
+        canResetPassword: {
+            type: Boolean,
+        },
+        status: {
+            type: String,
+        },
     },
 
     // All data and variables
@@ -114,64 +129,133 @@ export default {
             usernamePlaceholder: "mateuszpodeszwa@mainlinemenswear.co.uk",
             passwordPlaceholder: "************",
             usernameLabel: "Username",
-            passwordLabel: "Password"
+            passwordLabel: "Password",
+            isWindowWideEnough: true,
+            isWindowTallEnough: true,
+            form: useForm({
+                email: '',
+                password: '',
+                remember: false,
+            }),
+            styleVariables: {
+                primary: '#4DA2D4',
+                secondary: '#107CBC',
+            }
         };
+    },
+
+    watch: {
     },
 
     //Methods
     methods: {
+        handleResize() {
+            // Update the data properties based on the window size or any other conditions
+            this.isWindowWideEnough = window.innerWidth > 940; // Adjust the width threshold as needed
+            this.isWindowTallEnough = window.innerHeight > 650; // Adjust the height threshold as needed
+        },
+        shouldShowElement() {
+            // Return the condition based on the reactive data properties
+            return this.isWindowWideEnough && this.isWindowTallEnough;
+        },
+        focusOnPassword() {
+            // Programmatically focus on the password input field
+            this.$refs.passwordInput.focus();
+        },
+        submit() {
+            this.form.post(route('login'), {
+                onFinish: () => this.form.reset('password'),
+            });
+        },
+        transitionIsOver(el) {
+            //const docStyle = getComputedStyle(document.documentElement);
+            gsap.to(".box_login-ANIMATION", {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 1,
+                    delay: 0,
+                    ease: "power3.inOut",
+                });
+            gsap.to(
+                ".box_login-ANIMATION",
+                {
+                    boxShadow: `-30px -30px ${this.styleVariables.primary}, 30px 30px ${this.styleVariables.secondary}`,
+                    duration: 1,
+                    ease: "back.out(1)",
+                    delay: 0.75,
+                }
+            );
+            gsap.to(
+                ".background_slide-ANIMATION",
+                {
+                    background: `linear-gradient(90deg, ${this.styleVariables.secondary} 50%, ${this.styleVariables.primary} 50%)`,
+                    delay: 0.45,
+                    ease: "elastic.out(1,0.80)",
+                    duration: 1,
+                }
+            );
+            gsap.to(
+                ".bottom_navbar",
+                {
+                    delay: 1,
+                    duration: 1,
+                    translateY: 0,
+                    ease: "elastic.out(0.4,0.55)",
+                }
+            );
+        },
 
+    },
+
+    computed: {
     },
 
     // Execute when page is loaded, mainly animations
     mounted() {
-// First animation
-        gsap.from(
+        // Call the method on window resize
+        window.addEventListener('resize', this.handleResize);
+        // Call the method initially
+        this.handleResize();
+
+        // First animation
+        gsap.to(
             ".box_login-ANIMATION",
             {
-                opacity: 0.3,
+                opacity: 0,
                 scale: 0.8,
-                duration: 0.7,
-                ease: "power3.inOut",
+                duration: 0,
+                delay: 0,
             }
-        );
+        )
 
-// Second animation with a delay
-        gsap.from(
+        // Second animation with a delay
+        gsap.to(
             ".box_login-ANIMATION",
             {
-                boxShadow: "0px 0px 0px 0px #4DA2D4, 0px 0px 0px 0px #107CBC",
-                duration: 1.25,
-                ease: "back.out(1)",
-                delay: 0.8225,
+                boxShadow: `0px 0px ${this.styleVariables.primary}, 0px 0px ${this.styleVariables.secondary}`,
             }
         );
 
-// Third animation with a delay of 0.3s from the previous animation
-        gsap.fromTo(
+        gsap.to(
             ".background_slide-ANIMATION",
             {
-                background: "linear-gradient(90deg, #107CBC 0%, #4DA2D4 0%)",
-            },
-            {
-                background: "linear-gradient(90deg, #107CBC 50%, #4DA2D4 50%)",
-                delay: 0.3,
-                ease: "elastic.out(1,0.80)",
-                duration: 0.85,
+                background: `linear-gradient(90deg, ${this.styleVariables.secondary} 0%, ${this.styleVariables.primary} 0%)`,
             }
         );
 
-        gsap.from(
+        gsap.to(
             ".bottom_navbar",
             {
-                delay: 0.85,
-                duration: 0.6,
                 translateY: +200,
-                ease: "elastic.out(0.4,0.55)",
             }
         );
 
-    }
+    },
+    beforeDestroy() {
+        window.addEventListener('resize', this.checkScreenSize);
+        // Remove the event listener to avoid memory leaks
+        window.removeEventListener('resize', this.handleResize);
+    },
 };
 </script>
 
@@ -191,13 +275,31 @@ $LoginBoxSize: (min(100vw, max($LoginBoxBase, 20vw)), min(fit-content, 100vh), $
 $BreakingPoint: externall.$MobileBreakingPoint
 $InputColor: getColor(content, inputBackground)
 
+.error_message, .animation_error
+    position: absolute
+    padding: 20px
+    min-height: fit-content
+    width: 360px
+    background-color: indianred
+    top: 60px
+    justify-self: center
+    margin: 0
+    flex-shrink: 0
+    transition: transform 1s ease
+
+
 // Mixin to calculate opposite shadow offset for corners
 @mixin opposite-corner-shadow-offset($offset)
     $opposite-offset: -$offset
     box-shadow: $offset $offset $SecondaryBackgroundColor, $opposite-offset $opposite-offset $MainBackgroundColor
+    // If you're looking to update the colour scheme, you need to do it in JS as well. Edit GSAP animations.
 
 *
     overflow: hidden !important
+
+.VuePreloader
+    background-color: darken($MainBackgroundColor, 30%) !important
+    color: $ColorTitle !important
 
 section, body
     overflow: hidden
@@ -234,9 +336,6 @@ section > :first-child
     grid-template-rows: 75px 1fr
     gap: 2.525rem
     padding: 45px
-    @media (max-width: 500px)
-        padding-left: 10px
-        padding-right: 10px
 
 .login_box-ITEMS
     // Uncomment to see the grid boundaries
@@ -296,8 +395,36 @@ section > :first-child
         padding-left: 20px
 
 @media only screen and (max-width: 480px)
-
-
+    section, body
+        overflow: auto
+        max-height: 100vh
+        scrollbar-width: auto
+    section > :first-child
+        width: 100%
+        height: 100%
+        place-self: center
+    [class*="login_box"]
+        overflow: auto
+    .login_box-GRID
+        display: block
+        padding-left: 10px
+        padding-right: 10px
+    .login_box-ITEMS
+        padding: 25.5px 0
+    .ITEM_1
+        max-width: 100%
+        padding: 0 40px
+        @media (width < 340px)
+            padding: 0
+    .ITEM_1 > .img-logo
+        width: 100%
+        height: auto
+        @media (width < 200px)
+            display: none !important
+            visibility: hidden !important
+    .ITEM_2
+        display: inline
+        margin: 0
 
 </style>
 
