@@ -142,7 +142,8 @@ export default {
             styleVariables: {
                 primary: '#4DA2D4',
                 secondary: '#107CBC',
-            }
+            },
+            defaultEmailDomain: '@mainlinemenswear.co.uk',
         };
     },
 
@@ -161,10 +162,20 @@ export default {
             return this.isWindowWideEnough && this.isWindowTallEnough;
         },
         focusOnPassword() {
-            // Programmatically focus on the password input field
+            // Programmatically focus on the password input fields
             this.$refs.passwordInput.focus();
         },
         submit() {
+            // Check if the entered email already contains "@gmail.com"
+            if (!this.form.email.includes(this.defaultEmailDomain)) {
+                // If not, concatenate the entered username with '@gmail.com'
+                const fullEmail = this.form.email + this.defaultEmailDomain;
+
+                // Update the email field with the full email
+                this.form.email = fullEmail;
+            }
+
+            // Now you can proceed with the validation and submission
             this.form.post(route('login'), {
                 onFinish: () => this.form.reset('password'),
             });
