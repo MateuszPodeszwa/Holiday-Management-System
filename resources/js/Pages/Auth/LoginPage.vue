@@ -15,12 +15,12 @@
             <div class="ITEM_2 login_box-ITEMS">
                 <form @submit.prevent="submit">
                 <span>
-                    <p><label for="username">{{ usernameLabel }}</label></p>
+                    <p><label for="username">{{ loginFormData.usernameLabel }}</label></p>
                     <input
                         type="email"
                         id="username"
                         @keyup.enter="focusOnPassword"
-                        :placeholder="usernamePlaceholder"
+                        :placeholder="loginFormData.usernamePlaceholder"
                         v-model="form.email"
                         required
                         autofocus
@@ -28,11 +28,11 @@
                     >
                 </span>
                 <span>
-                    <p><label for="password">{{ passwordLabel }}</label></p>
+                    <p><label for="password">{{ loginFormData.passwordLabel }}</label></p>
                     <input
                         type="password"
                         id="password"
-                        :placeholder="passwordPlaceholder"
+                        :placeholder="loginFormData.passwordPlaceholder"
                         v-model="form.password"
                         @keyup.enter="submit"
                         ref="passwordInput"
@@ -126,10 +126,12 @@ export default {
     // All data and variables
     data() {
         return {
-            usernamePlaceholder: "mateuszpodeszwa@mainlinemenswear.co.uk",
-            passwordPlaceholder: "************",
-            usernameLabel: "Username",
-            passwordLabel: "Password",
+            loginFormData: {
+                usernamePlaceholder: "mateusz.podeszwa",
+                passwordPlaceholder: "************",
+                usernameLabel: "Username",
+                passwordLabel: "Password",
+            },
             isWindowWideEnough: true,
             isWindowTallEnough: true,
             form: useForm({
