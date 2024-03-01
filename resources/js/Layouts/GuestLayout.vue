@@ -1,34 +1,14 @@
-<template>
-
-    <section class="BACKGROUND grid h-screen w-screen background_slide-ANIMATION">
-        <div class="login_box-BACKGROUND box_login-ANIMATION login_box-GRID">
-            <div class="ITEM_1 login_box-ITEMS"><mmw-logo-wide class="img-logo" /></div>
-            <div class="ITEM_2 login_box-ITEMS">
-                <span>
-                    <keep-alive><p><label for="username">{{ usernameLabel }}</label></p></keep-alive>
-                    <input type="email" id="username" :placeholder="usernamePlaceholder">
-                </span>
-                <span>
-                    <p><label for="password">{{ passwordLabel }}</label></p>
-                    <input type="password" id="password" :placeholder="passwordPlaceholder">
-                </span>
-            </div>
-        </div>
-        <bottom-nav-bar class="bottom_navbar"/>
-    </section>
-
-</template>
-
 <script>
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import { Link } from '@inertiajs/vue3';
 import gsap from "gsap";
-import mmwLogoWide from "../COMPONENTS/mmw-logo-wide.vue";
-import bottomNavBar from "../COMPONENTS/accessibility-navbar.vue"
+import FloatingBar from "@/Components/FloatingBar.vue";
 
 export default {
     name: 'LoginPage',
     components: {
-        mmwLogoWide,
-        bottomNavBar,
+        ApplicationLogo,
+        FloatingBar,
     },
     data() {
         return {
@@ -69,6 +49,8 @@ export default {
                 y: +200,
                 duration: 1,
                 delay: 1,
+                display: 0,
+                opacity: 0,
                 ease: "elastic.out(0.8,0.8)"
             }
         );
@@ -76,7 +58,19 @@ export default {
 };
 </script>
 
-<style scoped lang="sass">
+<template>
+    <section class="BACKGROUND grid h-screen w-screen background_slide-ANIMATION">
+        <div class="login_box-BACKGROUND box_login-ANIMATION login_box-GRID">
+            <div class="ITEM_1 login_box-ITEMS"><application-logo class="img-logo" /></div>
+            <div class="ITEM_2 login_box-ITEMS">
+                <slot />
+            </div>
+        </div>
+        <FloatingBar class="bottom_navbar"/>
+    </section>
+</template>
+
+<style lang="sass" scoped>
     // Importing local files
     @use '../../sass/abstracts' as *
     @use "../../sass/base" as base
@@ -86,9 +80,8 @@ export default {
     $MainBackgroundColor: getColor(background, primary)
     $SecondaryBackgroundColor: getColor(background, secondary)
     $MainBackgroundComponentColor: getColor(backgroundComponents, BasicWindow)
-    $ColorTitle: getColor(content, textTitle)
     $LoginBoxBase: 520px
-    $LoginBoxSize: (min(100vw, max($LoginBoxBase, 20vw)), min($LoginBoxBase, 100vh), 800px) // nth: 1: width, 2: height
+    $LoginBoxSize: (min(100vw, max($LoginBoxBase, 20vw)), min(fit-content, 100vh), $LoginBoxBase) // nth: 1: width, 2: height
     $BreakingPoint: externall.$MobileBreakingPoint
 
     // Mixin to calculate opposite shadow offset for corners
@@ -98,7 +91,7 @@ export default {
 
     section, body
         overflow: hidden
-        max-height: 100vmin
+        max-height: 100vh
         scrollbar-width: none
 
     // Edit the background colour
@@ -121,6 +114,7 @@ export default {
     // Edit BACKGROUND of login_box
     .login_box-BACKGROUND
         background-color: $MainBackgroundComponentColor
+        border-radius: 6px
         @media (width > $BreakingPoint)
             @include opposite-corner-shadow-offset(30px)
 
@@ -134,6 +128,7 @@ export default {
             padding-right: 10px
 
     .login_box-ITEMS
+        // Uncomment to see the grid boundaries
         // background-color: darken($MainBackgroundComponentColor, 2.5)
         padding: 2.5px
 
@@ -153,29 +148,4 @@ export default {
         display: flex
         flex-direction: column
         margin: 0 15px
-
-        input
-            height: 70px
-            padding-left: 20px
-            box-sizing: border-box
-            margin: 0
-            background-color: #C9E0F2
-
-        span
-            flex: 0
-            margin: 0 0 25px 0
-            padding: 0
-
-        label, p
-            margin-bottom: 15px
-            line-height: 150% /* 27px */
-            color: $ColorTitle
-
-    input[type=text]:focus
-        background-color: cornflowerblue
-
-</style>
-
-<style scoped lang="css">
-
 </style>
