@@ -59,6 +59,7 @@ export default {
 </script>
 
 <template>
+<!--This layout is used only for the pages that are not loginPage.vue, as loginPage has its own set of styles-->
     <section class="BACKGROUND grid h-screen w-screen background_slide-ANIMATION">
         <div class="login_box-BACKGROUND box_login-ANIMATION login_box-GRID">
             <div class="ITEM_1 login_box-ITEMS"><application-logo class="img-logo" /></div>
