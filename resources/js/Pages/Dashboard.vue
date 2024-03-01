@@ -18,7 +18,3 @@ s
         </div>
     </AuthenticatedLayout>
 </template>
-
-<style lang="sass" scoped>
-
-</style>
