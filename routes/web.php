@@ -34,7 +34,7 @@ Route::get('/oldlogin', function () {
 // You can edit the login in the AuthenticatedSessionController.php
 
 // Only logged users can access dashboard
-Route::get('/dashboard', function () {
+Route::get('/dashboard/home', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
