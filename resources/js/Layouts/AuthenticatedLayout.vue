@@ -12,6 +12,7 @@ import FloatingBar from "@/Components/FloatingBar.vue";
 const showingNavigationDropdown = ref(false);
 </script>
 
+
 <template>
         <div class="min-h-screen bg-gray-500">
             <!-- Header, The Strip-->
@@ -33,6 +34,7 @@ const showingNavigationDropdown = ref(false);
                     </div>
 
                     <div class="NAV-Right">
+                        <img src="/assets/icons/bootstrap.svg" alt="Bootstrap" width="32" height="32">
                         <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </NavLink>
@@ -83,7 +85,7 @@ $InputColor: getColor(content, inputBackground)
 .NAV-Primary-Menu
     display: flex
     justify-content: space-between          // Divides the space between items equally
-    width: 95%                             // Ensure the menu takes up the full width
+    width: 97%                              // Makes the margin on sides
 
 .NAV-Left, .NAV-Middle, .NAV-Right
     // Correct items to be on the vertical centre
@@ -92,6 +94,11 @@ $InputColor: getColor(content, inputBackground)
 
 .NAV-Middle
     flex-grow: 0
-
+    a
+        color: lighten($ColorTitle, 100%)
+        font-family: Verdana, Geneva, sans-serif
+        font-weight: bold
+        font-size: 1.25rem
+        letter-spacing: 0.5rem
 
 </style>
