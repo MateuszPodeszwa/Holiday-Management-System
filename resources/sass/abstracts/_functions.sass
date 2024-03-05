@@ -10,3 +10,14 @@
 // Example usage
 // $backgroundPrimary: getColor('background', 'primary');
 //      Returns: #ecf0f1
+
+@function perfect-horizontal-center($element-width)
+    $screen-width: 100vw // Viewport width
+
+    // Convert element width to viewport units
+    $element-width-vw: ($element-width / $screen-width) * 100
+
+    // Calculate the left margin to center the element
+    $left-margin: (100 - $element-width-vw) / 2
+
+    @return $left-margin * 1vw // Convert back to vw
