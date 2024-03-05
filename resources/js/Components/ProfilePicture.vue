@@ -16,7 +16,7 @@
 .profile-image
     width: 100%
     height: 100%
-    border: 5px solid white  // Add a border around the image
+    border: 2.5px solid white  // Add a border around the image
     box-sizing: border-box  // Ensure the border doesn't affect the dimensions
     border-radius: 50%
 
