@@ -128,10 +128,16 @@ $InputColor: getColor(content, inputBackground)
         margin: 0 20px
 
     &:hover
-        color: lighten($ColorTitle, 5%)
-        font-size: calc(externall.$NavigationIconSize - 10%)
-        transform: rotate(360deg)
-        transition: all 400ms ease
+        color: lighten($ColorTitle, 90%)
+        font-size: calc(externall.$NavigationIconSize + 15%)
+        animation: jump 100ms infinite alternate ease
+        padding-bottom: 10px
+
+@keyframes jump
+    0%
+        transform: rotate(2deg)
+    100%
+        transform: rotate(-2deg)
 
 /* Basic styling for the search container */
 .search-container
