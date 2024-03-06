@@ -7,18 +7,24 @@
 </template>
 
 <style lang="sass" scoped>
+@use '../../sass/abstracts' as *
 .NAV-Profile_Picture
     border-radius: 50%
     overflow: hidden
     width: 45px
     height: 45px
 
+    &:hover
+        .profile-image
+            border: none
+
 .profile-image
     width: 100%
     height: 100%
-    border: 2.5px solid white  // Add a border around the image
+    border: $AvatarBorderSize solid getColor(background, accentPrimary)  // Add a border around the image
     box-sizing: border-box  // Ensure the border doesn't affect the dimensions
     border-radius: 50%
+    transition: 200ms all ease
 
 img
     width: 100%
