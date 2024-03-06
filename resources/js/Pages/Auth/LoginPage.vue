@@ -185,7 +185,7 @@ export default {
             gsap.to(".box_login-ANIMATION", {
                     opacity: 1,
                     scale: 1,
-                    duration: 1,
+                    duration: 0.90,
                     delay: 0,
                     ease: "power3.inOut",
                 });
