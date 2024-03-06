@@ -1,8 +1,18 @@
-<script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-import DropdownLink from "@/Components/DropdownLink.vue";
+<script>
 import Breadcrumb from "@/Components/Breadcrumb.vue";
+import DropdownLink from "@/Components/DropdownLink.vue";
+import { Head } from '@inertiajs/vue3';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+
+export default {
+    name: 'Dashboard',
+    components: {
+        Breadcrumb,
+        DropdownLink,
+        AuthenticatedLayout,
+        Head,
+    }
+}
 </script>
 
 <template>
@@ -10,7 +20,7 @@ import Breadcrumb from "@/Components/Breadcrumb.vue";
 
     <AuthenticatedLayout>
         <template #header>
-            <div class="NAV-SUB-Left_side"><Breadcrumb></Breadcrumb></div>
+            <div class="NAV-SUB-Left_side"><breadcrumb/></div>
             <div class="NAV-SUB-Right_side">sup2</div>
         </template>
 
