@@ -21,3 +21,7 @@
     $left-margin: (100 - $element-width-vw) / 2
 
     @return $left-margin * 1vw // Convert back to vw
+
+@function pxToRem($pxValue)
+    $remValue: ($pxValue / 16) + rem
+    @return $remValue
