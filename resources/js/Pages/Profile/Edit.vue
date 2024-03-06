@@ -4,6 +4,7 @@ import DeleteUserForm from './Partials/DeleteUserForm.vue';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
 import { Head } from '@inertiajs/vue3';
+import Breadcrumb from "@/Components/Breadcrumb.vue";
 
 defineProps({
     mustVerifyEmail: {
@@ -20,7 +21,8 @@ defineProps({
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Profile</h2>
+            <div class="NAV-SUB-Left_side"><breadcrumb/></div>
+            <div class="NAV-SUB-Right_side">sup2</div>
         </template>
 
         <div class="py-12">
