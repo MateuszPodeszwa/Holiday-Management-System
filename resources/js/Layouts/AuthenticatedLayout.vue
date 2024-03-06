@@ -10,6 +10,7 @@ import { Link } from '@inertiajs/vue3';
 import FloatingBar from "@/Components/FloatingBar.vue";
 import "bootstrap-icons/font/bootstrap-icons.css";
 const showingNavigationDropdown = ref(false);
+const appNameDashboard = import.meta.env.VITE_APP_NAME_FULL
 </script>
 
 
@@ -35,7 +36,7 @@ const showingNavigationDropdown = ref(false);
                     <!-- Navigation Links -->
                     <div class="NAV-Middle">
                         <Link :href="route('dashboard')">
-                            <a>HOLIDAYS</a>
+                            <a>{{ appNameDashboard }}</a>
                         </Link>
                     </div>
 
@@ -43,7 +44,7 @@ const showingNavigationDropdown = ref(false);
                         <button class="bi bi-question-square-fill NAV-Icon"></button>
                         <button class="bi bi-archive-fill NAV-Icon"></button>
                         <button class="bi bi-bookmark-plus-fill NAV-Icon"></button>
-<!--                        <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+<!--                    <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </NavLink>
 -->
@@ -54,8 +55,8 @@ const showingNavigationDropdown = ref(false);
             </nav>
 
             <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <header class="shadow NAV-SUB" v-if="$slots.header">
+                <div>
                     <slot name="header" />
                 </div>
             </header>
@@ -77,13 +78,12 @@ $MainBackgroundColor: getColor(background, primary)
 $SecondaryBackgroundColor: getColor(background, secondary)
 $MainBackgroundComponentColor: getColor(backgroundComponents, BasicWindow)
 $ColorTitle: getColor(content, textTitle)
-$BreakingPoint: externall.$MobileBreakingPoint
 $InputColor: getColor(content, inputBackground)
 
 // Controls the ribbon of the primary navbar
 .NAV-Primary-Styles
-    background: $SecondaryBackgroundColor   // The Colour of the NAV
-    height: 80px                            // Height of the NAV
+    background: $SecondaryBackgroundColor           // The Colour of the NAV
+    height: externall.$MainNDashboardNavbarHeight   // Height of the NAV
 
     // Makes the things to display in the perfect centre
     display: flex
@@ -93,8 +93,8 @@ $InputColor: getColor(content, inputBackground)
 // Controls the items inside the primary navbar
 .NAV-Primary-Menu
     display: flex
-    justify-content: space-between          // Divides the space between items equally
-    width: 97%                              // Makes the margin on sides
+    justify-content: space-between                                  // Divides the space between items equally
+    width:  calc(100% - externall.$DashboardNavbarSideMargins)      // Makes the margin on sides
 
 .NAV-Left, .NAV-Middle, .NAV-Right
     // Correct items to be on the vertical centre
@@ -103,12 +103,12 @@ $InputColor: getColor(content, inputBackground)
 
 .NAV-Middle
     flex-grow: 0
-    transform: translateX(-65%)
+    transform: translateX(-50%)
     // margin-left: perfect-horizontal-center(0)
     @media (width < 900px)
         display: none
     @media (width < 1150px)
-        transform: translateX(-40%)
+        transform: translateX(-20%)
     a
         color: lighten($ColorTitle, 100%)
         font-family: Verdana, Geneva, sans-serif
@@ -118,51 +118,75 @@ $InputColor: getColor(content, inputBackground)
 
 .NAV-Icon
     color: $MainBackgroundComponentColor
-    width: 45px
-    font-size: 2.45rem
+    width: fit-content
+    min-width: 45px
+    font-size: externall.$NavigationIconSize
     padding: 0
+    transition: all 200ms ease
 
     &:nth-child(2)
-        margin: 0 10px
+        margin: 0 20px
+
+    &:hover
+        color: lighten($ColorTitle, 5%)
+        font-size: calc(externall.$NavigationIconSize - 10%)
+        transform: rotate(360deg)
+        transition: all 400ms ease
 
 /* Basic styling for the search container */
 .search-container
     position: relative
     //margin: 10px /* Adjust the margin as needed */
-    margin-left: 30px
-    @media (width < 490px)
+    margin-left: externall.$SearchBarSpacing
+    @media (width < 580px)
         display: none
 
 /* Style for the search icon */
 .search-icon
     position: absolute
-    left: 10px /* Adjust the position as needed */
+    left: 10px
     top: 50%
     transform: translateY(-50%)
     color: $ColorTitle /* Adjust the icon color as needed */
 
 /* Style for the search input */
 .search-input
-    padding: 8px
-    padding-left: 35px /* Ensure space for the icon */
-    border: 1px solid darken($MainBackgroundComponentColor, 40%)
+    padding: 8px 8px 8px 35px
+    /* Ensure space for the icon */
     background: $MainBackgroundComponentColor
-    border-radius: 4px
-    width: 340px /* Adjust the width as needed */
+    border-radius: externall.$BorderRadius - 2px
+    width: externall.$SearchBarWidth
     @media (width < 1150px)
         width: 240px
 
 /* Style for the search button */
 .search-button
+    $fitContent: 2.5px
     position: absolute
-    right: 5px /* Adjust the position as needed */
+    right: 3.65px + $fitContent /* Adjust the position as needed */
     top: 50%
     transform: translateY(-50%)
-    background-color: #4CAF50 /* Adjust the background color as needed */
-    color: #fff /* Adjust the text color as needed */
+    background-color: $InputColor /* Adjust the background color as needed */
+    color: lighten($ColorTitle, 0) /* Adjust the text color as needed */
     border: none
-    padding: 5px 15px
-    border-radius: 3px
-    cursor: pointer
+    padding: $fitContent 15px
+    border-radius: externall.$BorderRadius / 2
 
+    &:hover
+        cursor: pointer
+
+.NAV-SUB
+    height: 60px
+    background: $MainBackgroundComponentColor
+
+    div
+        font-size: 14px
+        width: 100%
+        height: 100%
+        display: grid
+        place-items: center start
+        grid-template-columns: 1fr 1fr
+        padding: 0 externall.$DashboardNavbarSideMargins + externall.$SearchBarSpacing + 15px
+        @media (width < 580px)
+            padding: 0 externall.$DashboardNavbarSideMargins - 30px
 </style>
