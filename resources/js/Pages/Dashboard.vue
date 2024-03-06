@@ -2,6 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import DropdownLink from "@/Components/DropdownLink.vue";
+import Breadcrumb from "@/Components/Breadcrumb.vue";
 </script>
 
 <template>
@@ -9,7 +10,8 @@ import DropdownLink from "@/Components/DropdownLink.vue";
 
     <AuthenticatedLayout>
         <template #header>
-            sup
+            <div class="NAV-SUB-Left_side"><Breadcrumb></Breadcrumb></div>
+            <div class="NAV-SUB-Right_side">sup2</div>
         </template>
 
         <div class="py-12">
