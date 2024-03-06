@@ -1,41 +1,50 @@
-<!-- resources/js/components/Breadcrumb.vue -->
 <template>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item" v-for="(item, index) in breadcrumbs" :key="index">
-                <router-link :to="{ path: item.path }">{{ item.label }}</router-link>
-            </li>
-        </ol>
-    </nav>
+    <span v-html="formattedAddress"></span>
 </template>
 
 <script>
 export default {
     data() {
         return {
-            breadcrumbs: [],
+            baseUrl: "",
+            sections: [],
+            formattedAddress: "",
         };
     },
-    watch: {
-        $route(to) {
-            this.updateBreadcrumbs();
-        },
-    },
-    created() {
-        this.updateBreadcrumbs();
-    },
-    methods: {
-        updateBreadcrumbs() {
-            const matchedRoutes = this.$route.matched;
-            this.breadcrumbs = matchedRoutes.map(route => ({
-                label: route.meta.breadcrumb || route.name,
-                path: route.path,
-            }));
-        },
+    mounted() {
+        // Get the current URL
+        const currentUrl = window.location.href;
+
+        // Determine the base URL dynamically
+        this.baseUrl = window.location.origin + "/";
+
+        // Remove the base URL from the current URL
+        const relativeUrl = currentUrl.replace(this.baseUrl, "");
+
+        // Split the relative URL into sections using '/'
+        this.sections = relativeUrl.split('/');
+
+        // Make the last word bold and link to the current URL
+        this.formattedAddress = this.sections.map((section, index) => {
+            if (index === this.sections.length - 1) {
+                // If it's the last word, make it bold and link to the current URL
+                return `<a href="${this.baseUrl}${this.formattedAddress}"><b>${section}</b></a>`; // Replace formattedAddress with sections
+            } else {
+                return section;
+            }
+        }).join(' / ');
     },
 };
 </script>
 
 <style lang="sass" scoped>
-/* Add your breadcrumb styling here */
+span
+    text-transform: uppercase
+
+    a
+        text-decoration: none
+        color: inherit
+
+    b
+        font-weight: bold
 </style>
