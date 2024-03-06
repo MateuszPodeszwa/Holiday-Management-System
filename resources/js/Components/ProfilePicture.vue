@@ -17,6 +17,9 @@
     &:hover
         .profile-image
             border: none
+    &:active
+        .profile-image
+            border: 20px solid getColor(background, accentPrimary)
 
 .profile-image
     width: 100%
