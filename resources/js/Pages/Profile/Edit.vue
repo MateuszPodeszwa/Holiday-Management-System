@@ -21,7 +21,6 @@ defineProps({
 
     <AuthenticatedLayout>
         <template #header>
-            <div class="NAV-SUB-Left_side"><breadcrumb/></div>
             <div class="NAV-SUB-Right_side">sup2</div>
         </template>
 
