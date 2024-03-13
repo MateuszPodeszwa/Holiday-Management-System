@@ -15,24 +15,44 @@ $ColorTitle: getColor(content, textTitle)
 $InputColor: getColor(content, inputBackground)
 
 .NAV-SUB-Right_side
-    justify-self: end /* Align to the right horizontally */
-    align-self: end /* Align to the top vertically */
-    width: fit-content
-    height: 100%
-    display: grid
-    grid-template-columns: 1fr 1fr
-    place-items: center end
-    gap: 25px
+    justify-self: end           // Align to the right horizontally
+    align-self: end             // Align to the top vertically
+    width: min-content          // Set the minimum width
+    height: 100%                // Stretch the content to set in vertically middle
+    display: flex               // Flex Content, don't delete
+    place-items: center end     // Place item vertical center
+    gap: 25px                   // Set Gao between items
 
     button
-        width: 100px
+        width: max(100px, auto)
+        min-width: 100px
         height: 35px
+        padding: 0 10px
+        max-width: 20ch
         color: $ColorTitle
         background: $InputColor
         border-radius: externall.$BorderRadius / 2
         transition: 250ms all ease
+        overflow: hidden
+        text-overflow: ellipsis
+        white-space: nowrap
 
         &:hover
             color: $InputColor
             background: $SecondaryBackgroundColor
             transition: 250ms all ease
+
+    p
+        max-width: 40ch
+        height: fit-content
+        text-align: center
+        overflow: scroll
+        text-overflow: ellipsis
+        white-space: nowrap
+        color: $ColorTitle
+        transition: 250ms all ease
+        margin: 0
+        padding: 0
+
+        &.error_message
+            color: indianred

@@ -20,6 +20,12 @@ const form = useForm({
     name: user.name,
     email: user.email,
 });
+
+// Emit form errors to parent component
+const emitFormErrors = () => {
+    // Emit custom event with form errors
+    emit('form-errors', form.errors);
+}
 </script>
 
 <template>

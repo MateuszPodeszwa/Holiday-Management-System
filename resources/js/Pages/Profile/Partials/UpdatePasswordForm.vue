@@ -31,6 +31,13 @@ const updatePassword = () => {
         },
     });
 };
+
+// Emit form errors to parent component
+const emitFormErrors = (errors) => {
+    // Dispatch custom event with form errors
+    const event = new CustomEvent('form-errors', { detail: errors });
+    window.dispatchEvent(event);
+}
 </script>
 
 <template>
@@ -89,7 +96,7 @@ const updatePassword = () => {
             </div>
 
             <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+                <PrimaryButton @click="emitFormErrors(form.errors)" :disabled="form.processing">Save</PrimaryButton>
 
                 <Transition
                     enter-active-class="transition ease-in-out"
@@ -97,7 +104,7 @@ const updatePassword = () => {
                     leave-active-class="transition ease-in-out"
                     leave-to-class="opacity-0"
                 >
-                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved.</p>
+                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved</p>
                 </Transition>
             </div>
         </form>
