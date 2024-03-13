@@ -65,8 +65,9 @@ const appNameDashboard = import.meta.env.VITE_APP_NAME_FULL
             </header>
 
             <!-- Page Content -->
-            <main>
-                <slot />
+            <main class="m-4 max-h-full max-w-full">
+                <slot class="m-4 bg-green-950 max-h-full max-w-full" />
+                sdrf
             </main>
         </div>
 </template>
@@ -75,6 +76,7 @@ const appNameDashboard = import.meta.env.VITE_APP_NAME_FULL
 @use '../../sass/abstracts' as *
 @use "../../sass/base" as base
 @use "../../sass/abstracts/variables" as externall
+@use "../../sass/components/SubmenuButtonComponent" as subMenu
 
 // Define local variables
 $MainBackgroundColor: getColor(background, primary)
@@ -200,4 +202,7 @@ $InputColor: getColor(content, inputBackground)
         padding: 0 35px 0 externall.$DashboardNavbarSideMargins + externall.$SearchBarSpacing - 7px // Was + 15
         @media (width < 580px)
             padding: 0 externall.$DashboardNavbarSideMargins - 30px
+
+.ccs
+    height: 100vh
 </style>
