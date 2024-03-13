@@ -1,4 +1,4 @@
-<script setup>
+<script>
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -6,40 +6,54 @@ import TextInput from '@/Components/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-const passwordInput = ref(null);
-const currentPasswordInput = ref(null);
-
-const form = useForm({
-    current_password: '',
-    password: '',
-    password_confirmation: '',
-});
-
-const updatePassword = () => {
-    form.put(route('password.update'), {
-        preserveScroll: true,
-        onSuccess: () => form.reset(),
-        onError: () => {
-            if (form.errors.password) {
-                form.reset('password', 'password_confirmation');
-                passwordInput.value.focus();
-            }
-            if (form.errors.current_password) {
-                form.reset('current_password');
-                currentPasswordInput.value.focus();
-            }
+export default {
+    components: {
+        InputError,
+        InputLabel,
+        PrimaryButton,
+        TextInput,
+    },
+    data() {
+        return {
+            // Define refs for input elements
+            passwordInput: null,
+            currentPasswordInput: null,
+            // Use the useForm hook
+            form: useForm({
+                current_password: '',
+                password: '',
+                password_confirmation: '',
+            }),
+        };
+    },
+    methods: {
+        updatePassword() {
+            this.form.put(route('password.update'), {
+                preserveScroll: true,
+                onSuccess: function() { this.form.reset(); }.bind(this),
+                onError: function() {
+                    if (this.form.errors.password) {
+                        this.form.reset('password', 'password_confirmation');
+                        this.$refs.passwordInput.focus();
+                        this.emitFormErrors(this.form.errors);
+                    }
+                    if (this.form.errors.current_password) {
+                        this.form.reset('current_password');
+                        this.$refs.currentPasswordInput.focus();
+                        this.emitFormErrors(this.form.errors);
+                    }
+                }.bind(this),
+            });
         },
-    });
+        emitFormErrors(errors){
+            let isFormSubmitted = this.form.recentlySuccessful
+            this.$emit('form-errors', errors);
+            this.$emit('if-success', isFormSubmitted);
+        }
+    }
+
 };
-
-// Emit form errors to parent component
-const emitFormErrors = (errors) => {
-    // Dispatch custom event with form errors
-    const event = new CustomEvent('form-errors', { detail: errors });
-    window.dispatchEvent(event);
-}
 </script>
-
 <template>
     <section>
         <header>
@@ -96,7 +110,7 @@ const emitFormErrors = (errors) => {
             </div>
 
             <div class="flex items-center gap-4">
-                <PrimaryButton @click="emitFormErrors(form.errors)" :disabled="form.processing">Save</PrimaryButton>
+                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
 
                 <Transition
                     enter-active-class="transition ease-in-out"
