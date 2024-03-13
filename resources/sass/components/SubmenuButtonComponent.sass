@@ -43,7 +43,7 @@ $InputColor: getColor(content, inputBackground)
             transition: 250ms all ease
 
     p
-        max-width: 40ch
+        max-width: 60ch
         height: fit-content
         text-align: center
         overflow: scroll
@@ -53,6 +53,26 @@ $InputColor: getColor(content, inputBackground)
         transition: 250ms all ease
         margin: 0
         padding: 0
+        @media (device-width < 1300px)
+            max-width: 50ch
+        @media (device-width < 1200px)
+            max-width: 40ch
+        @media (device-width < 1100px)
+            max-width: 30ch
+        @media (device-width < 1000px)
+            max-width: 20ch
+
+        &.disable-scroll
+            /* Disable native scrollbars */
+            scrollbar-width: none /* Firefox */
+            -ms-overflow-style: none /* Internet Explorer/Edge */
+        .disable-scroll::-webkit-scrollbar
+            display: none /* Safari/Chrome/Opera */
 
         &.error_message
             color: indianred
+            font-weight: bolder
+
+        &.success_message
+            color: lawngreen
+            font-weight: bold
