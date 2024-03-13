@@ -21,7 +21,9 @@ defineProps({
 
     <AuthenticatedLayout>
         <template #header>
-            <div class="NAV-SUB-Right_side">sup2</div>
+            <div class="NAV-SUB-Right_side">
+
+            </div>
         </template>
 
         <div class="py-12">
@@ -45,3 +47,7 @@ defineProps({
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style lang="sass" scoped>
+@use "../../../sass/components/SubmenuButtonComponent" as subMenu
+</style>
