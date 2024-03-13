@@ -1,0 +1,38 @@
+// Importing local files
+@use '../../sass/abstracts' as *
+@use "../../sass/abstracts/variables" as externall
+
+//
+    This File is used only to style the button layout, component located on the submenu
+    in the Dashboard.
+//
+
+// Define local variables
+$MainBackgroundColor: getColor(background, primary)
+$SecondaryBackgroundColor: getColor(background, secondary)
+$MainBackgroundComponentColor: getColor(backgroundComponents, BasicWindow)
+$ColorTitle: getColor(content, textTitle)
+$InputColor: getColor(content, inputBackground)
+
+.NAV-SUB-Right_side
+    justify-self: end /* Align to the right horizontally */
+    align-self: end /* Align to the top vertically */
+    width: fit-content
+    height: 100%
+    display: grid
+    grid-template-columns: 1fr 1fr
+    place-items: center end
+    gap: 25px
+
+    button
+        width: 100px
+        height: 35px
+        color: $ColorTitle
+        background: $InputColor
+        border-radius: externall.$BorderRadius / 2
+        transition: 250ms all ease
+
+        &:hover
+            color: $InputColor
+            background: $SecondaryBackgroundColor
+            transition: 250ms all ease
