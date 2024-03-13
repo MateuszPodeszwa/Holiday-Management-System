@@ -45,10 +45,11 @@
                     <label for="checkbox_remember" class="flex items-center"><span style="flex: 1; margin-right: 15px">Remember Me</span>
                     <Checkbox id="checkbox_remember" name="remember" style="height: 25px;" v-model:checked="form.remember" />
                     </label>
-                </span>
+                    </span>
 -->
                 <br>
                 <br>
+
 <!--                <div class="flex items-center justify-end mt-4">
                     <Link
                         v-if="canResetPassword"
@@ -61,24 +62,22 @@
                     <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                         Log in
                     </PrimaryButton>
-                </div>
+                    </div>
 -->
                 </form>
-                <transition-group name="button-scale" id="button_scale">
-                    <PrimaryButton
-                        v-show="form.email && form.password"
-                        @click="submit"
-                        class="ms-4"
-                        :class="{ 'opacity-25': form.processing }"
-                        :disabled="form.processing"
-                        :v-model="form.submit"
-                    >
-                        Log in
-                    </PrimaryButton>
-                </transition-group>
-
             </div>
         </div>
+        <loginButton
+            @click="submit"
+            class="ms-4 floating"
+            :class="{
+                'opacity-25': form.processing,
+            }"
+
+            :formEmail="form.email"
+            :formPassword="form.password"
+            :formProcessing="form.processing"
+        />
         <bottom-nav-bar v-if="shouldShowElement()" style="overflow: hidden" class="bottom_navbar" />
         <transition-group>
             <div v-if="status" class="mb-4 font-medium text-sm text-green-600">{{ status }}</div>
@@ -100,12 +99,14 @@ import gsap from "gsap";
 import mmwLogoWide from "@/Components/ApplicationLogo.vue";
 import bottomNavBar from "@/Components/FloatingBar.vue"
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import LoginButton from "@/Components/LoginButton.vue";
 
 export default {
     name: 'LoginPage',
 
     // All utilised components
     components: {
+        LoginButton,
         mmwLogoWide,
         bottomNavBar,
         InputError,
@@ -406,6 +407,7 @@ section > :first-child
 
     .checkbox-fix
         padding-left: 20px
+
 
 @media only screen and (max-width: 480px)
     section, body
