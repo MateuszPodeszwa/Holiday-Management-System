@@ -29,12 +29,8 @@ export default {
             </div>
         </template>
 
-        <div class="py-12 bg-white">
-                    <div class="p-6 text-gray-900">You're logged in!</div>
-                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
-                        <DropdownLink :href="route('logout')" method="post" as="button">
-                            Log Out
-                        </DropdownLink>
+        <div class="bg-col-main">
+                    <div class="text-gray-900">You're logged in!</div>
                     <i class="fa-solid fa-square-q"></i>
         </div>
     </AuthenticatedLayout>
@@ -53,4 +49,8 @@ $SecondaryBackgroundColor: getColor(background, secondary)
 $MainBackgroundComponentColor: getColor(backgroundComponents, BasicWindow)
 $ColorTitle: getColor(content, textTitle)
 $InputColor: getColor(content, inputBackground)
+$pageBackground: getColor(background, pageBackground)
+
+div.bg-col-main
+    background: $pageBackground
 </style>
