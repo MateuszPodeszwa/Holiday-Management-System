@@ -1,11 +1,17 @@
 <script>
+import { gsap } from 'gsap';
+
 export default {
     data() {
         return {
             currentPosition: '80px', // Default to 80px
             lastScrollTop: 0, // Store the last scroll position
+            isMenuExpanded: false,
+            menuWidth: 65, // Initial width of the menu
+            expandValue: 350,
         };
     },
+
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
     },
@@ -17,37 +23,55 @@ export default {
             // Get the current scroll position
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-            // Calculate the difference in scroll position since the last scroll event
-            const delta = scrollTop - this.lastScrollTop || 0; // Calculate scroll delta
+            // Calculate the scroll distance since the last scroll event
+            const scrollDelta = scrollTop - this.lastScrollTop;
 
-            // Calculate the new position based on the scroll delta
-            // If scrolling down, `delta` will be positive, so subtracting it will move the position up
-            // If scrolling up, `delta` will be negative, so subtracting it will move the position down
-            const newPosition = parseInt(this.currentPosition) - delta; // Adjust position based on scroll delta
-
-            // Ensure the new position stays within the range of 0 to 80 pixels
-            const clampedPosition = Math.min(Math.max(0, newPosition), 80);
-
-            // Update the current position with the clamped value
-            this.currentPosition = clampedPosition + 'px'; // Ensure newPosition is within 0 and 80
+            // If scrolling down
+            if (scrollDelta > 0 && parseInt(this.currentPosition) > 0) {
+                // Decrease currentPosition by the scroll distance, but ensure it doesn't go below 0
+                this.currentPosition = Math.max(0, parseInt(this.currentPosition) - scrollDelta) + 'px';
+            }
+            // If scrolling up and within 80 pixels or less from the top of the page
+            else if (scrollDelta < 0 && scrollTop <= 80) { // Should be 80
+                // Increase currentPosition by 1 pixel, but ensure it doesn't exceed 80px
+                this.currentPosition = Math.min(80, parseInt(this.currentPosition) - scrollDelta) + 'px';
+            }
 
             // Store the current scroll position for the next scroll event
             this.lastScrollTop = scrollTop; // Store current scroll position for next scroll event
         },
+        expandMenu () {
+            // Toggle the isMenuExpanded flag
+            this.isMenuExpanded = !this.isMenuExpanded;
 
+            // Define the target width based on the expanded state
+            const targetWidth = this.isMenuExpanded ? this.expandValue : 65;
+
+            // Animate the menu width change using GSAP
+            gsap.to(this.$refs.menu,
+                {
+                    width: targetWidth,
+                    duration: 0.5,
+                    ease: 'power2.inOut'
+                });
+        },
     },
-};
 
+
+};
+// only height is changing from 80 to 0px and then all the contents stays on top
+// when there is min 80pix on top then start addint 1 pix per 1 pix scrolled
 
 
 </script>
 
 
 <template>
-    <div class="NAV-VERTICAL shadow">
+    <div class="NAV-VERTICAL shadow" :style="{ width: menuWidth + 'px' }" ref="menu">
         <div class="NAV-Elements">
-            <p>
-                Text hfkgfdgugu y ygy guy ug euglore
+            <button @click="expandMenu"><a>Expand Me Daddy</a></button>
+            <p class="pt-4">
+                The menu is tr
             </p>
         </div>
     </div>
@@ -68,18 +92,21 @@ export default {
     $pageBackground: getColor(background, pageBackground)
 
     div.NAV-VERTICAL
-        left: 0
-        z-index: 21
-        bottom: 0
-        margin-top: auto
-        position: fixed
-        width: 65px!important
-        height: calc(100% - v-bind(currentPosition))
+        // Position the sidebar
+        left: 0         // Ensure it is on the left
+        bottom: 0       // Ensure it places the bottom place
+        z-index: 1      // Must be 1, must be lower than <nav> and higher than header
+
+        padding-top: v-bind(currentPosition)    // DON'T TOUCH
+        position: fixed                         // Makes it stay on scroll
+        height: 100%                            // Take 100vh, don't change. It covers the gaps on scroll.
+
+        // Decorative
         background: darken($SecondaryBackgroundColor, 15%)
         display: flex
         flex-direction: column
 
-    div.NAV-VERTICAL > *
-        padding-top: 0
-        flex-grow: 1
+        & > * // Makes the any first element inside NAV-VERTICAL
+            padding: 2.5px
+            flex-grow: 1
 </style>
