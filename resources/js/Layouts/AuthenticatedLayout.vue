@@ -64,7 +64,7 @@ const appNameDashboard = import.meta.env.VITE_APP_NAME_FULL || "MAINLINE"
                     </div>
                 </header>
 
-                <NavigationVertical style="z-index: 1" />
+                <NavigationVertical />
 
             <!-- Page Content -->
             <main class="p-4 max-h-full max-w-full">
