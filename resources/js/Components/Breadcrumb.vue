@@ -9,7 +9,14 @@
 </template>
 
 <script>
+import NavigationVertical from "@/Components/NavigationVertical.vue";
+
 export default {
+    computed: {
+        NavigationVertical() {
+            return NavigationVertical
+        }
+    },
     data() {
         return {
             baseUrl: "",
