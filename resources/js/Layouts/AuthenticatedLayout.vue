@@ -19,7 +19,7 @@ const appNameDashboard = import.meta.env.VITE_APP_NAME_FULL || "MAINLINE"
 <template>
         <div class="min-h-screen gb-col-main">
             <!-- Header, The Strip-->
-            <nav class="NAV-Primary-Styles" style="z-index: -1 !important;">
+            <nav class="NAV-Primary-Styles">
                 <!-- Primary Navigation Menu -->
                 <div class="NAV-Primary-Menu">
                     <!-- Logo -->
@@ -54,20 +54,17 @@ const appNameDashboard = import.meta.env.VITE_APP_NAME_FULL || "MAINLINE"
                 </div>
 
             </nav>
+                <!-- Page Heading -->
+                <header class="shadow NAV-SUB" v-if="$slots.header">
+                    <div>
+                        <span class="NAV-SUB-Left_side">
+                            <breadcrumb />
+                        </span>
+                        <slot name="header" />
+                    </div>
+                </header>
 
-            <!-- Page Heading -->
-            <header class="shadow NAV-SUB" v-if="$slots.header">
-                <div>
-                    <span class="NAV-SUB-Left_side">
-                        <breadcrumb />
-                    </span>
-                    <slot name="header" />
-                </div>
-            </header>
-
-            <NavigationVertical>
-
-            </NavigationVertical>
+                <NavigationVertical style="z-index: 1" />
 
             <!-- Page Content -->
             <main class="p-4 max-h-full max-w-full">
@@ -101,8 +98,9 @@ const appNameDashboard = import.meta.env.VITE_APP_NAME_FULL || "MAINLINE"
         // Makes the things to display in the perfect centre
         display: flex
         justify-content: center
+        position: relative // makes the z-indexwork
         align-items: center
-        z-index: 30 !important
+        z-index: 2
 
     // Controls the items inside the primary navbar
     .NAV-Primary-Menu
@@ -201,9 +199,10 @@ const appNameDashboard = import.meta.env.VITE_APP_NAME_FULL || "MAINLINE"
         height: 60px
         background: $MainBackgroundComponentColor
         top: 0
-        z-index: 20
+        z-index: 1
         position: sticky
 
+        // Controls Breadcrumb
         div
             font-size: 14px
             width: 100%
@@ -211,7 +210,7 @@ const appNameDashboard = import.meta.env.VITE_APP_NAME_FULL || "MAINLINE"
             display: grid
             place-items: center start
             grid-template-columns: 1fr 1fr
-            padding: 0 35px 0 externall.$DashboardNavbarSideMargins + externall.$SearchBarSpacing - 7px // Was + 15
+            padding: 0 35px 0 externall.$DashboardNavbarSideMargins + externall.$SearchBarSpacing + 15px // Set to - 7px if wanna push the icon on left
             @media (width < 580px)
                 padding: 0 externall.$DashboardNavbarSideMargins - 30px
 
