@@ -16,10 +16,13 @@
 
     &:hover
         .profile-image
-            border: none
+            border: 5px solid getColor(background, accentPrimary)
     &:active
         .profile-image
-            border: 20px solid getColor(background, accentPrimary)
+            animation: sizeDown 400ms ease-in alternate
+            @keyframes sizeDown
+                to
+                    border: 10px solid getColor(background, accentPrimary)
 
 .profile-image
     width: 100%
