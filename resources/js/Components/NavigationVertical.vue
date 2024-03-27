@@ -76,11 +76,12 @@ export default {
                 </p>
             </div>
             <div v-show="isMenuExpanded">
-                <span>
-                    <button class="bi bi-list" @click="expandMenu"></button>
-                    <button class="bi bi-list" @click="expandMenu"></button>
-                    another com
-                </span>
+                <div class="Elements-Expanded">
+                    <div>
+                        <p class="mainline">Mainline</p>
+                        <p class="menswear">Menswear</p>
+                    </div>
+                </div>
                 <p class="pt-4">
                     The menu goes brrr
                 </p>
@@ -129,15 +130,39 @@ export default {
     .addShadow
         box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.5)
 
-    div.NAV-Elements > div button
+    div.NAV-Elements > :first-child button
         color: $InputColor
         font-size: 45px
         width: 100% // Set to 100% if wish to have it in the middle
-        height: externall.$MainSubmenuWidth
+        transform: translateY(-2.5px)
+        height: 60px
 
-    div.NAV-Elements > div span
+    div.NAV-Elements > div div.Elements-Expanded
         display: grid
-        grid-template-columns: repeat(3, auto)
+        grid-template-columns: repeat(2, 1fr)
         justify-items: start
-        background: gray
+        height: externall.$MainSubmenuWidth
+        border-bottom: 1px solid black
+        position: relative
+
+        & *
+            align-self: center
+            color: white
+
+        & :nth-child(1)
+            position: absolute
+            float: left
+            left: 0
+            transform: scale(0.8)
+            padding-left: 10px
+
+            p.mainline
+                transform: translateY(-13.5px)
+                font-size: 1.5rem
+                font-weight: bolder
+
+            p.menswear
+                transform: translateY(+13.5px)
+                font-size: .9rem
+                font-weight: 400
 </style>
