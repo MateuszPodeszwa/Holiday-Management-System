@@ -77,9 +77,13 @@ export default {
             </div>
             <div v-show="isMenuExpanded">
                 <div class="Elements-Expanded">
-                    <div>
+                    <div class="Elements-Col-1">
                         <p class="mainline">Mainline</p>
                         <p class="menswear">Menswear</p>
+                    </div>
+                    <div class="Elements-Col-2">
+                        <p>Collapse</p>
+                        <button class="bi bi-list" @click="expandMenu"></button>
                     </div>
                 </div>
                 <p class="pt-4">
@@ -131,7 +135,7 @@ export default {
         box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.5)
 
     div.NAV-Elements > :first-child button
-        color: $InputColor
+        color: white
         font-size: 45px
         width: 100% // Set to 100% if wish to have it in the middle
         transform: translateY(-2.5px)
@@ -142,27 +146,35 @@ export default {
         grid-template-columns: repeat(2, 1fr)
         justify-items: start
         height: externall.$MainSubmenuWidth
-        border-bottom: 1px solid black
+        border-bottom: 1.5px solid rgb(255, 255, 255, 0.3)
         position: relative
 
         & *
             align-self: center
             color: white
 
-        & :nth-child(1)
-            position: absolute
-            float: left
-            left: 0
-            transform: scale(0.8)
-            padding-left: 10px
+        .Elements-Col-2
+            grid-column: 2 / 3
+            display: flex
+            justify-self: right
+            button
+                transform: translateY(+1.5px)
+            p
+                font-size: small
+                text-decoration: underline
+                padding: 0 4px
+
+        .Elements-Col-1
+            grid-column: 1 / 2
+            padding-left: 20px
 
             p.mainline
-                transform: translateY(-13.5px)
-                font-size: 1.5rem
+                transform: translateY(+4px)
+                font-size: 1.5rem * 0.8
                 font-weight: bolder
 
             p.menswear
-                transform: translateY(+13.5px)
-                font-size: .9rem
+                transform: translateY(-4px)
+                font-size: .9rem * 0.8
                 font-weight: 400
 </style>
