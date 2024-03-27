@@ -32,6 +32,7 @@ const appNameDashboard = import.meta.env.VITE_APP_NAME_FULL || "MAINLINE"
                             <input type="text" class="search-input" placeholder="Search...">
                             <span class="input-label search-button">/</span>
                         </div>
+                        <button class="bi bi-binoculars-fill NAV-Icon-search"></button>
 
                     </div>
 
@@ -147,6 +148,22 @@ const appNameDashboard = import.meta.env.VITE_APP_NAME_FULL || "MAINLINE"
             animation: jump 100ms infinite alternate ease
             padding-bottom: 10px
 
+    .NAV-Icon-search
+        color: $MainBackgroundComponentColor
+        width: fit-content
+        min-width: 45px
+        font-size: externall.$NavigationIconSize
+        padding: 0 20px
+        transition: all 200ms ease
+        @media (width > 580px - 1px)
+            display: none
+
+        &:nth-child(2)
+            margin: 0 20px
+
+        &:hover
+            color: lighten($ColorTitle, 90%)
+
     @keyframes jump
         0%
             transform: rotate(2deg)
@@ -156,7 +173,7 @@ const appNameDashboard = import.meta.env.VITE_APP_NAME_FULL || "MAINLINE"
     /* Basic styling for the search container */
     .search-container
         position: relative
-        //margin: 10px /* Adjust the margin as needed */
+        // margin: 10px /* Adjust the margin as needed */
         margin-left: externall.$SearchBarSpacing
         @media (width < 580px)
             display: none
@@ -170,13 +187,17 @@ const appNameDashboard = import.meta.env.VITE_APP_NAME_FULL || "MAINLINE"
         color: $ColorTitle /* Adjust the icon color as needed */
 
     /* Style for the search input */
-    .search-input
+    .search-container .search-input
         padding: 8px 8px 8px 35px
         /* Ensure space for the icon */
         background: $MainBackgroundComponentColor
         border-radius: externall.$BorderRadius - 2px
         width: externall.$SearchBarWidth
         @media (width < 1150px)
+            width: 240px
+        @media (width < 900px)
+            width: externall.$SearchBarWidth
+        @media (width < 690px)
             width: 240px
 
     /* Style for the search button */
@@ -212,7 +233,7 @@ const appNameDashboard = import.meta.env.VITE_APP_NAME_FULL || "MAINLINE"
             grid-template-columns: 1fr 1fr
             padding: 0 35px 0 externall.$DashboardNavbarSideMargins + externall.$SearchBarSpacing + 15px // Set to - 7px if wanna push the icon on left
             @media (width < 580px)
-                padding: 0 externall.$DashboardNavbarSideMargins - 30px
+                padding: 0 externall.$DashboardNavbarSideMargins - 50px 0 externall.$DashboardNavbarSideMargins + 15px
 
     .ccs
         height: 100vh
