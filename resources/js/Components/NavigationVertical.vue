@@ -67,15 +67,20 @@ export default {
 
 
 <template>
-    <div class="NAV-VERTICAL shadow" :style="{ width: menuWidth + 'px' }" ref="menu">
+    <div class="NAV-VERTICAL shadow" :style="{ width: menuWidth + 'px' }" ref="menu" :class="{'addShadow' : isMenuExpanded}">
         <div class="NAV-Elements">
-            <button @click="expandMenu"><a>Expand Me Daddy</a></button>
-            <div v-show="isMenuExpanded">
+            <div v-show="!isMenuExpanded">
+                <button class="bi bi-list" @click="expandMenu"></button>
                 <p class="pt-4">
                     The menu is not brrr
                 </p>
             </div>
-            <div v-show="!isMenuExpanded">
+            <div v-show="isMenuExpanded">
+                <span>
+                    <button class="bi bi-list" @click="expandMenu"></button>
+                    <button class="bi bi-list" @click="expandMenu"></button>
+                    another com
+                </span>
                 <p class="pt-4">
                     The menu goes brrr
                 </p>
@@ -106,7 +111,7 @@ export default {
 
         padding-top: v-bind(currentPosition)    // DON'T TOUCH
         position: fixed                         // Makes it stay on scroll
-        height: 100vh                            // Take 100vh, don't change. It covers the gaps on scroll.
+        height: 100vh                           // Take 100vh, don't change. It covers the gaps on scroll.
 
         // Decorative
         background: darken($SecondaryBackgroundColor, 15%)
@@ -117,6 +122,22 @@ export default {
         animation-delay: 0s
 
         & > * // Makes the any first element inside NAV-VERTICAL
-            padding: 2.5px
+            padding: 1.5px
             flex-grow: 1
+
+    .addShadow
+        box-shadow: 1.5px 0 15px rgba(0, 0, 0, 0.4)
+
+    div.NAV-Elements > div span button, div button
+        color: $InputColor
+        font-size: 45px
+        width: 100% // Set to 100% if wish to have it in the middle
+        max-height: 55px
+
+    div.NAV-Elements > div span
+        display: grid
+        grid-template-columns: repeat(3, auto)
+        justify-items: start
+        background: gray
+        border-radius: 15px
 </style>
