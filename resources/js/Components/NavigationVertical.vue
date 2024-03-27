@@ -9,6 +9,7 @@ export default {
             isMenuExpanded: false,
             menuWidth: 65, // Initial width of the menu
             expandValue: 350,
+            animationDuration: '1s',
         };
     },
 
@@ -21,7 +22,7 @@ export default {
     methods: {
         handleScroll() {
             // Get the current scroll position
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
 
             // Calculate the scroll distance since the last scroll event
             const scrollDelta = scrollTop - this.lastScrollTop;
@@ -31,7 +32,7 @@ export default {
                 // Decrease currentPosition by the scroll distance, but ensure it doesn't go below 0
                 this.currentPosition = Math.max(0, parseInt(this.currentPosition) - scrollDelta) + 'px';
             }
-            // If scrolling up and within 80 pixels or less from the top of the page
+            // If scrolling up and within 80 pixels or fewer from the top of the page
             else if (scrollDelta < 0 && scrollTop <= 80) { // Should be 80
                 // Increase currentPosition by 1 pixel, but ensure it doesn't exceed 80px
                 this.currentPosition = Math.min(80, parseInt(this.currentPosition) - scrollDelta) + 'px';
@@ -51,16 +52,15 @@ export default {
             gsap.to(this.$refs.menu,
                 {
                     width: targetWidth,
-                    duration: 0.5,
-                    ease: 'power2.inOut'
+                    duration: .01, // Must be .01 - Duration controlled in CSS
+                    delay: 0,
                 });
+
         },
     },
 
 
 };
-// only height is changing from 80 to 0px and then all the contents stays on top
-// when there is min 80pix on top then start addint 1 pix per 1 pix scrolled
 
 
 </script>
@@ -70,9 +70,16 @@ export default {
     <div class="NAV-VERTICAL shadow" :style="{ width: menuWidth + 'px' }" ref="menu">
         <div class="NAV-Elements">
             <button @click="expandMenu"><a>Expand Me Daddy</a></button>
-            <p class="pt-4">
-                The menu is tr
-            </p>
+            <div v-show="isMenuExpanded">
+                <p class="pt-4">
+                    The menu is not brrr
+                </p>
+            </div>
+            <div v-show="!isMenuExpanded">
+                <p class="pt-4">
+                    The menu goes brrr
+                </p>
+            </div>
         </div>
     </div>
 </template>
@@ -99,12 +106,15 @@ export default {
 
         padding-top: v-bind(currentPosition)    // DON'T TOUCH
         position: fixed                         // Makes it stay on scroll
-        height: 100%                            // Take 100vh, don't change. It covers the gaps on scroll.
+        height: 100vh                            // Take 100vh, don't change. It covers the gaps on scroll.
 
         // Decorative
         background: darken($SecondaryBackgroundColor, 15%)
         display: flex
         flex-direction: column
+
+        transition: width 200ms ease-in-out
+        animation-delay: 0s
 
         & > * // Makes the any first element inside NAV-VERTICAL
             padding: 2.5px
