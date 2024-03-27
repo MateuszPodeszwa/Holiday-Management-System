@@ -117,27 +117,27 @@ export default {
         background: darken($SecondaryBackgroundColor, 15%)
         display: flex
         flex-direction: column
+        overflow-y: hidden // Hide the overflow
 
         transition: width 200ms ease-in-out
         animation-delay: 0s
 
         & > * // Makes the any first element inside NAV-VERTICAL
-            padding: 1.5px
+            padding: 0
             flex-grow: 1
 
     .addShadow
-        box-shadow: 1.5px 0 15px rgba(0, 0, 0, 0.4)
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.5)
 
-    div.NAV-Elements > div span button, div button
+    div.NAV-Elements > div button
         color: $InputColor
         font-size: 45px
         width: 100% // Set to 100% if wish to have it in the middle
-        max-height: 55px
+        height: externall.$MainSubmenuWidth
 
     div.NAV-Elements > div span
         display: grid
         grid-template-columns: repeat(3, auto)
         justify-items: start
         background: gray
-        border-radius: 15px
 </style>
