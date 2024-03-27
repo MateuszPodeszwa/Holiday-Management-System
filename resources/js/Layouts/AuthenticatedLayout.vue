@@ -217,7 +217,7 @@ const appNameDashboard = import.meta.env.VITE_APP_NAME_FULL || "MAINLINE"
             cursor: pointer
 
     .NAV-SUB
-        height: 60px
+        height: externall.$MainSubmenuWidth
         background: $MainBackgroundComponentColor
         top: 0
         z-index: 1
