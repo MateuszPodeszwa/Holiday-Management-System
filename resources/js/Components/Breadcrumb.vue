@@ -60,4 +60,17 @@ span
 
     b
         font-weight: bold
+
+@media (width < 580px)
+    span > :first-child
+        font-weight: 100
+    span
+        font-weight: 600
+    i
+        visibility: hidden
+        display: none
+
+@media (width < 540px)
+    span
+        display: none
 </style>
