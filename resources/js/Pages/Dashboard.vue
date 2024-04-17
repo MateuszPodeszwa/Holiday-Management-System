@@ -4,6 +4,7 @@ import DropdownLink from "@/Components/DropdownLink.vue";
 import { Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Link} from "@inertiajs/vue3";
+import CalendarSystem from "@/Components/CalendarSystem.vue";
 
 export default {
     name: 'Dashboard',
@@ -14,6 +15,7 @@ export default {
         AuthenticatedLayout,
         Head,
         Link,
+        CalendarSystem,
     }
 }
 </script>
@@ -33,6 +35,7 @@ export default {
                     <div class="text-gray-900">You're logged in!</div>
                     <i class="fa-solid fa-square-q"></i>
         </div>
+        <CalendarSystem />
     </AuthenticatedLayout>
 </template>
 
